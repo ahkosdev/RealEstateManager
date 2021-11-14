@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">RealEstateManager</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="property_type"> Type Of Property </string>
+    <string-array name="type_of_property">
+        <item> Manor </item>
+        <item> Loft </item>
+        <item> Penthouse </item>
+        <item> Chateau </item>
+        <item> Villa </item>
+        <item> Duplex </item>
+        <item> Building </item>
+        <item> Apartment </item>
+        <item> House </item>
+    </string-array>
+    <string name="property_price"> Price </string>
+    <string name="property_surface"> Area </string>
+    <string name="rooms_number"> Number Of Rooms </string>
+    <string name="property_address"> Address </string>
+
+    <string name="point_interest"> Point Of Interest </string>
+    <string name="school"> School </string>
+    <string name="high_school"> High School </string>
+    <string name="university"> University </string>
+    <string name="mall"> Mall </string>
+    <string name="hospital"> Hospital </string>
+    <string name="restaurant"> Restaurant </string>
+    <string name="park"> Park </string>
+    <string name="museum"> Museum </string>
+    <string name="stadium"> Stadium </string>
+    <string name="night_club"> Night Club </string>
+    <string name="sale_date"> Sale Date </string>
+    <string name="date_sale"> Date Of Sale </string>
+    <string name="sale_agent"> Real Estate Agent </string>
+    <string name="description"> Property Description </string>
+    <string name="available_status"> Available </string>
+    <string name="sold_status"> Sold </string>
+    <string name="save_button_text"> Save </string>
+    <string name="add_photo_button_text"> Add Photos </string>
+    <string name="no_image_choose_text"> Please choose a photo </string>
+
+    <string name="popup_title_permission_file_access"> Permission is need </string>
+
+
+</resources>
