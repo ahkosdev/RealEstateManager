@@ -13,13 +13,20 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controllers.Activities.AddPropertyActivity"></activity>
         <activity android:name=".Controllers.Activities.DetailsActivity" />
-        <activity android:name=".Controllers.Activities.HomePageActivity">
+        <activity android:name=".Controllers.Activities.HomePageActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD82JMaZzTg-SzGWcB4vpt_qdKQGQ9JvBo"/>
+
+
     </application>
 
 </manifest>
