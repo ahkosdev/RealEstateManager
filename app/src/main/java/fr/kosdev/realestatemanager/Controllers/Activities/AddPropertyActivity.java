@@ -76,7 +76,7 @@ public class AddPropertyActivity extends AppCompatActivity {
     private static final int RC_IMAGE_PERMS = 100;
     private static final int RC_CHOOSE_PHOTO = 200;
     private Uri uriImageSelected;
-    private ArrayList<Uri> imagesUriList;
+     ArrayList<String> imagesUriList;
     private int position = 0;
     PropertyImageAdapter imageAdapter;
 
@@ -110,7 +110,7 @@ public class AddPropertyActivity extends AppCompatActivity {
                     int count = data.getClipData().getItemCount();
                     for (int i = 0; i< count; i++){
                         this.uriImageSelected = data.getClipData().getItemAt(i).getUri();
-                        imagesUriList.add(uriImageSelected);
+                        imagesUriList.add(uriImageSelected.toString());
                     }
                     //imageAdapter = new PropertyImageAdapter(imagesUriList);
                     imageAdapter.notifyDataSetChanged();
@@ -123,7 +123,7 @@ public class AddPropertyActivity extends AppCompatActivity {
 
             }else if (data.getData() != null){
                 this.uriImageSelected = data.getData();
-                imagesUriList.add(uriImageSelected);
+                imagesUriList.add(uriImageSelected.toString());
                 //imageAdapter = new PropertyImageAdapter(imagesUriList);
                 imageAdapter.notifyDataSetChanged();
                 //Glide.with(this)
@@ -331,8 +331,8 @@ public class AddPropertyActivity extends AppCompatActivity {
                 long id = (long) (Math.random()*50000);
                 Property property = new Property(
                         id,
-                        uriImageSelected.toString(),
-                        //imagesUriList,
+                        //uriImageSelected.toString(),
+                        imagesUriList,
                         propertyTypesAutocomplete.getText().toString(),
                         priceOfProperty.getText().toString(),
                         numberOfRooms.getText().toString(),

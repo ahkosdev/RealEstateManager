@@ -72,7 +72,7 @@ public class DetailsFragment extends Fragment {
         photoUris = new ArrayList<>();
         Intent intent = getActivity().getIntent();
         Property property = (Property) intent.getSerializableExtra("idKey");
-        photoUris.add(property.getPhoto());
+        photoUris.addAll(property.getPhotos());
         Glide.with(this).load(photoUris.get(0)).into(detailImages);
         propertyDetailType.setText(property.getType() + "," + property.getStatus());
         propertyDetailPrice.setText(property.getPrice());

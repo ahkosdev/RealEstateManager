@@ -37,7 +37,7 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder {
         propertyAddress.setText(property.getAddress());
         propertySurface.setText(property.getSurfaceOfProperty() + "m²");
         propertyPrice.setText(property.getPrice() + "$");
-        Glide.with(propertyImage.getContext()).load(property.getPhoto()).into(propertyImage);
+        Glide.with(propertyImage.getContext()).load(property.getPhotos().get(0)).into(propertyImage);
 
     }
 

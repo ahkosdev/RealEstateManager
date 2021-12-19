@@ -19,9 +19,9 @@ import fr.kosdev.realestatemanager.R;
 
 public class PropertyImageAdapter extends RecyclerView.Adapter<PropertyImageAdapter.ImageViewHolder> {
 
-    private List<Uri> imageUris;
+    private List<String> imageUris;
 
-    public PropertyImageAdapter(List<Uri> imageUris) {
+    public PropertyImageAdapter(List<String> imageUris) {
         this.imageUris = imageUris;
     }
 
@@ -52,7 +52,7 @@ public class PropertyImageAdapter extends RecyclerView.Adapter<PropertyImageAdap
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
-        public void getPropertyImage( Uri selectedImage){
+        public void getPropertyImage( String selectedImage){
             Glide.with(imageItem.getContext()).load(selectedImage).into(imageItem);
         }
     }

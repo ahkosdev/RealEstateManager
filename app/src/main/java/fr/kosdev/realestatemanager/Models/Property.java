@@ -19,8 +19,8 @@ public class Property implements Serializable {
     private String numberOfRooms;
     private String surfaceOfProperty;
     private String propertyDescription;
-    private String photo;
-    //private List<String> photos;
+    //private String photo;
+     ArrayList<String> photos;
     private String address;
     private String pointsOfInterest;
     private String status;
@@ -28,14 +28,14 @@ public class Property implements Serializable {
     private long dateOfSale;
     private String realEstateAgent;
 
-    public Property(long id, String photo, String type, String price, String numberOfRooms, String surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, String dateOfEntry, String realEstateAgent) {
+    public Property(long id, ArrayList<String> photos, String type, String price, String numberOfRooms, String surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, String dateOfEntry, String realEstateAgent) {
         this.id = id;
         this.type = type;
         this.price = price;
         this.numberOfRooms = numberOfRooms;
         this.surfaceOfProperty = surfaceOfProperty;
         this.propertyDescription = propertyDescription;
-        this.photo = photo;
+        this.photos = photos;
         this.address = address;
         this.pointsOfInterest = pointsOfInterest;
         this.status = status;
@@ -45,7 +45,9 @@ public class Property implements Serializable {
     }
 
 
-   // public Property(String type, String price, String surfaceOfProperty, String address) {
+
+
+    // public Property(String type, String price, String surfaceOfProperty, String address) {
         //this.type = type;
        //this.price = price;
         //this.surfaceOfProperty = surfaceOfProperty;
@@ -100,14 +102,22 @@ public class Property implements Serializable {
         this.propertyDescription = propertyDescription;
     }
 
-    public String getPhoto() {
-        return photo;
+    //public String getPhoto() {
+        //return photo;
+    //}
+
+    //public void setPhotos(String photo) {
+        //this.photo = photo;
+    //}
+
+
+    public ArrayList<String> getPhotos() {
+        return photos;
     }
 
-    public void setPhotos(String photo) {
-        this.photo = photo;
+    public void setPhotos(ArrayList<String> photos) {
+        this.photos = photos;
     }
-
 
     public String getAddress() {
         return address;
