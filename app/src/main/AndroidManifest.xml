@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.kosdev.realestatemanager">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="false"
@@ -11,9 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controllers.Activities.AddPropertyActivity"></activity>
+        <activity
+            android:name=".Controllers.Activities.ShowAllPhotosActivity"
+            android:exported="false" />
+        <activity android:name=".Controllers.Activities.AddPropertyActivity" />
         <activity android:name=".Controllers.Activities.DetailsActivity" />
-        <activity android:name=".Controllers.Activities.HomePageActivity"
+        <activity
+            android:name=".Controllers.Activities.HomePageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +29,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD82JMaZzTg-SzGWcB4vpt_qdKQGQ9JvBo"/>
-
-
+            android:value="AIzaSyD82JMaZzTg-SzGWcB4vpt_qdKQGQ9JvBo" />
     </application>
 
 </manifest>

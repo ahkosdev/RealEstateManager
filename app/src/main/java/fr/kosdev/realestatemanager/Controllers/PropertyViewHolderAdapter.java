@@ -19,7 +19,7 @@ import fr.kosdev.realestatemanager.R;
 public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyViewHolder> {
 
     private List<Property> propertyList;
-    private long currentPropertyId;
+    private long propertyId;
 
     public PropertyViewHolderAdapter(List<Property> propertyList) {
         this.propertyList = propertyList;
@@ -39,9 +39,10 @@ public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentPropertyId = propertyList.get(position).getId();
+                propertyId = propertyList.get(position).getId();
                 Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-                intent.putExtra("idKey", (Serializable)property);
+                //intent.putExtra("idKey", (Serializable)property);
+                intent.putExtra("KEY_DETAIL", propertyId);
                 view.getContext().startActivity(intent);
             }
         });

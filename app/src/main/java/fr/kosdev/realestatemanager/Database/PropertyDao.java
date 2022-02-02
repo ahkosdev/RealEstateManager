@@ -1,6 +1,8 @@
 package fr.kosdev.realestatemanager.Database;
 
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -19,4 +21,9 @@ public interface PropertyDao {
 
     @Query("SELECT * FROM Property")
     LiveData<List<Property>> getProperties();
+
+    @Query("SELECT * FROM Property WHERE id = :propertyId")
+    LiveData<Property>  getPropertyWithId(long propertyId);
+
+
 }

@@ -37,4 +37,7 @@ public class PropertyViewModel extends ViewModel {
             }
         });
     }
+    public LiveData<Property> getProperty(long propertyId){
+        return propertyDataSource.getProperty(propertyId);
+    }
 }

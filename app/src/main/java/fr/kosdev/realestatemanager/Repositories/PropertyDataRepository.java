@@ -20,4 +20,8 @@ public class PropertyDataRepository {
     public LiveData<List<Property>> getProperties(){
         return propertyDao.getProperties();
     }
+
+    public LiveData<Property> getProperty(long propertyId){
+        return propertyDao.getPropertyWithId(propertyId);
+    }
 }
