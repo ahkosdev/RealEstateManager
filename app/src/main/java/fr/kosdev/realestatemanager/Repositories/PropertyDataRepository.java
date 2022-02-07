@@ -24,4 +24,7 @@ public class PropertyDataRepository {
     public LiveData<Property> getProperty(long propertyId){
         return propertyDao.getPropertyWithId(propertyId);
     }
+    public LiveData<Property> getPropertiesAddress(){
+        return propertyDao.getPropertyAddress();
+    }
 }

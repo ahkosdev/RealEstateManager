@@ -1,6 +1,7 @@
 package fr.kosdev.realestatemanager.Controllers.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -27,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -73,6 +76,7 @@ public class DetailsFragment extends Fragment {
     private List<String> photoUris;
     private Property mProperty;
     private PropertyViewModel propertyDetailViewModel;
+    private List<String> addressList;
 
 
 
@@ -183,6 +187,12 @@ public class DetailsFragment extends Fragment {
         }
     }
 
+    private void updateAddress(List<String> allAddress){
+        addressList.clear();
+        addressList.addAll(allAddress);
+
+    }
+    @SuppressLint("MissingPermission")
     private void getCurrentLocation(){
 
         Task<Location> task = mLocationProviderClient.getLastLocation();
@@ -200,6 +210,30 @@ public class DetailsFragment extends Fragment {
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                             mMap.setMyLocationEnabled(true);
+
+                            propertyDetailViewModel.getAllAddress().observe(getViewLifecycleOwner(), this::updateAddress);
+                            propertyDetailViewModel.getAddressGeocode(addressList.get(0)).observe(getViewLifecycleOwner(), realStateGeocode -> {
+
+                                try {
+                                    mMap.clear();
+                                    for (int i = 0; i< realStateGeocode.getResults().size(); i++){
+                                        double lat = realStateGeocode.getResults().get(i).getGeometry().getLocation().getLat();
+                                        Double lng = realStateGeocode.getResults().get(i).getGeometry().getLocation().getLng();
+
+                                        MarkerOptions markerOptions = new MarkerOptions();
+                                        LatLng geocodeLatLng = new LatLng(lat,lng);
+                                        markerOptions.position(geocodeLatLng);
+                                        mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
+
+                                    }
+
+
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+
+                            });
                         }
                     });
                 }
