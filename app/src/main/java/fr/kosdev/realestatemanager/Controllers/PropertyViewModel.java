@@ -20,9 +20,10 @@ public class PropertyViewModel extends ViewModel {
     private MutableLiveData<RealStateGeocode> geocodeLiveData;
     private GeocodeRepository geocodeRepository;
 
-    public PropertyViewModel(PropertyDataRepository propertyDataSource, Executor executor) {
+    public PropertyViewModel(PropertyDataRepository propertyDataSource, Executor executor, GeocodeRepository geocodeRepository) {
         this.propertyDataSource = propertyDataSource;
         this.executor = executor;
+        this.geocodeRepository = geocodeRepository;
     }
 
     public void init(){
@@ -31,10 +32,10 @@ public class PropertyViewModel extends ViewModel {
         }
         properties = propertyDataSource.getProperties();
 
-        if (geocodeLiveData != null){
-            return;
-        }
-        geocodeRepository = GeocodeRepository.getInstance();
+       // if (geocodeLiveData != null){
+           //return;
+        //}
+        //geocodeRepository = GeocodeRepository.getInstance();
     }
     public LiveData<List<Property>> getProperties(){
         return propertyDataSource.getProperties();
@@ -51,9 +52,6 @@ public class PropertyViewModel extends ViewModel {
 
     public LiveData<Property> getProperty(long propertyId){
         return propertyDataSource.getProperty(propertyId);
-    }
-    public LiveData<Property> getAllAddress(){
-        return propertyDataSource.getPropertiesAddress();
     }
 
     public LiveData<RealStateGeocode> getAddressGeocode(String address){

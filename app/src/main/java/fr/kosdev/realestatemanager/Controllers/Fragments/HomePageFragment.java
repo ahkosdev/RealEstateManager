@@ -3,15 +3,23 @@ package fr.kosdev.realestatemanager.Controllers.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +45,7 @@ public class HomePageFragment extends Fragment {
     FloatingActionButton addFab;
 
     private PropertyViewHolderAdapter mPropertyViewHolderAdapter;
-    private List<Property> mPropertyList;
+    public static List<Property> mPropertyList;
     PropertyViewModel mPropertyViewModel;
 
 
@@ -81,6 +89,7 @@ public class HomePageFragment extends Fragment {
         mPropertyViewModel = new ViewModelProvider(this,propertyViewModelFactory).get(PropertyViewModel.class);
         mPropertyViewModel.init();
     }
+
     private void getProperties(){
         mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::updateProperties);
     }
@@ -90,4 +99,5 @@ public class HomePageFragment extends Fragment {
         mPropertyList.addAll(properties);
         mPropertyViewHolderAdapter.notifyDataSetChanged();
     }
+
 }

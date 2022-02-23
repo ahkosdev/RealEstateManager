@@ -5,11 +5,15 @@
       <map>
         <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/activity_add_property.xml" value="0.25226449275362317" />
         <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/activity_details.xml" value="0.203125" />
+        <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/activity_home_page.xml" value="0.23777173913043478" />
+        <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/activity_maps.xml" value="0.3625" />
         <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/activity_show_all_photos.xml" value="0.3625" />
+        <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/drawer_nav_header.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/fragment_details.xml" value="0.2536231884057971" />
         <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/fragment_home_page.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/image_list_item.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/layout/photos_list_item.xml" value="0.40503432494279173" />
+        <entry key="..\:/Users/osi/Desktop/Development/RealEstateManager2/app/src/main/res/menu/drawer_nav_menu.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

@@ -40,6 +40,11 @@
     <string name="add_photo_button_text"> Add Photos </string>
     <string name="no_image_choose_text"> Please choose a photo </string>
 
+    <string name="map"> Map </string>
+    <string name="property_ad">Add Property</string>
+    <string name="navigation_drawer_open"> Open drawer navigation</string>
+    <string name="navigation_drawer_close"> Close drawer navigation</string>
+
     <string name="popup_title_permission_file_access"> Permission is need </string>
 
 

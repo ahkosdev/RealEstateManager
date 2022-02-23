@@ -89,7 +89,6 @@ public class DetailsFragment extends Fragment {
         ButterKnife.bind(this, view);
         this.configureViewModel();
         this.getPropertyDetails();
-        this.configureMap();
 
         detailImages.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +135,9 @@ public class DetailsFragment extends Fragment {
                     detailPropertyDescription.setText(property.getPropertyDescription());
                     proximityPointOfInterest.setText(property.getPointsOfInterest());
 
+                    mProperty = property;
+                    configureMap();
+
                 });
 
             }
@@ -166,15 +168,7 @@ public class DetailsFragment extends Fragment {
 
             requestPermissions(new String[]{ Manifest.permission.ACCESS_FINE_LOCATION}, 20);
         }
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(@NonNull GoogleMap googleMap) {
-                mMap = googleMap;
-                LatLng latLng = new LatLng(-34, 151);
-                mMap.addMarker(new MarkerOptions().position(latLng).title("my position"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            }
-        });
+
     }
 
     @Override
@@ -187,11 +181,11 @@ public class DetailsFragment extends Fragment {
         }
     }
 
-    private void updateAddress(List<String> allAddress){
-        addressList.clear();
-        addressList.addAll(allAddress);
+    //private void updateAddress(List<String> allAddress){
+        //addressList.clear();
+        //addressList.addAll(allAddress);
 
-    }
+
     @SuppressLint("MissingPermission")
     private void getCurrentLocation(){
 
@@ -205,28 +199,29 @@ public class DetailsFragment extends Fragment {
                         @Override
                         public void onMapReady(@NonNull GoogleMap googleMap) {
                             mMap = googleMap;
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            mMap.addMarker(new MarkerOptions().position(latLng).title("my position"));
-                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                            mMap.setMyLocationEnabled(true);
+                           // LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            //mMap.addMarker(new MarkerOptions().position(latLng).title("my position"));
+                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                            //mMap.setMyLocationEnabled(true);
 
-                            propertyDetailViewModel.getAllAddress().observe(getViewLifecycleOwner(), this::updateAddress);
-                            propertyDetailViewModel.getAddressGeocode(addressList.get(0)).observe(getViewLifecycleOwner(), realStateGeocode -> {
+                            propertyDetailViewModel.getAddressGeocode(mProperty.getAddress()).observe(getViewLifecycleOwner(), realStateGeocode -> {
 
                                 try {
                                     mMap.clear();
-                                    for (int i = 0; i< realStateGeocode.getResults().size(); i++){
-                                        double lat = realStateGeocode.getResults().get(i).getGeometry().getLocation().getLat();
-                                        Double lng = realStateGeocode.getResults().get(i).getGeometry().getLocation().getLng();
+
+                                        double lat = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLat();
+                                        double lng = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLng();
 
                                         MarkerOptions markerOptions = new MarkerOptions();
                                         LatLng geocodeLatLng = new LatLng(lat,lng);
                                         markerOptions.position(geocodeLatLng);
                                         mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(geocodeLatLng));
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(geocodeLatLng, 16));
 
 
-                                    }
+
 
 
                                 }catch (Exception e){
@@ -240,4 +235,5 @@ public class DetailsFragment extends Fragment {
             }
         });
     }
+
 }
