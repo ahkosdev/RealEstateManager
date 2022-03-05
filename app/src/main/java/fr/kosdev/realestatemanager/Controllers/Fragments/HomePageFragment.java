@@ -41,8 +41,8 @@ public class HomePageFragment extends Fragment {
 
     @BindView(R.id.property_rcv)
     RecyclerView propertyRecyclerView;
-    @BindView(R.id.add_fab)
-    FloatingActionButton addFab;
+    //@BindView(R.id.add_fab)
+    //FloatingActionButton addFab;
 
     private PropertyViewHolderAdapter mPropertyViewHolderAdapter;
     public static List<Property> mPropertyList;
@@ -62,14 +62,14 @@ public class HomePageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         ButterKnife.bind(this,view);
 
-        addFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddPropertyActivity.class);
-                startActivity(intent);
+        //addFab.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View view) {
+                //Intent intent = new Intent(getContext(), AddPropertyActivity.class);
+                //startActivity(intent);
 
-            }
-        });
+            //}
+        //});
 
         this.configureRecyclerView();
         this.configureViewModel();

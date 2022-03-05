@@ -1,17 +1,18 @@
-package fr.kosdev.realestatemanager.Controllers.Activities;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
+package fr.kosdev.realestatemanager.Controllers.Fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,40 +28,49 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
-import fr.kosdev.realestatemanager.Controllers.Fragments.HomePageFragment;
+import butterknife.ButterKnife;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewModel;
 import fr.kosdev.realestatemanager.Injection.Injection;
 import fr.kosdev.realestatemanager.Injection.PropertyViewModelFactory;
 import fr.kosdev.realestatemanager.Models.Property;
 import fr.kosdev.realestatemanager.R;
 
-public class MapsActivity extends AppCompatActivity {
+
+public class MapsFragment extends Fragment {
 
     private GoogleMap mMap;
-    private SupportMapFragment mapFragment;
-    private FusedLocationProviderClient mLocationProviderClient;
-    private List<Property> mProperties;
-    private PropertyViewModel propertyViewModel;
+    private SupportMapFragment mMapFragment;
+    private FusedLocationProviderClient mProviderClient;
+    private PropertyViewModel mPropertyViewModel;
+    private List<Property> mProperties = HomePageFragment.mPropertyList;
+
+    public static MapsFragment newInstance(){
+        return (new MapsFragment());
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        this.configureViewModel();
-        this.getProperties();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        ButterKnife.bind(this, view);
+        this.configurePropertyMap();
+        this.configureMapViewModel();
+        return view;
 
     }
 
-    private void configureViewModel(){
-        PropertyViewModelFactory propertyViewModelFactory = Injection.providePropertyViewModelFactory(getApplicationContext());
-        propertyViewModel = new ViewModelProvider(this, propertyViewModelFactory).get(PropertyViewModel.class);
-        propertyViewModel.init();
+    private void configureMapViewModel(){
+        PropertyViewModelFactory propertyViewModelFactory = Injection.providePropertyViewModelFactory(getContext());
+        mPropertyViewModel = new ViewModelProvider(this,propertyViewModelFactory).get(PropertyViewModel.class);
+        mPropertyViewModel.init();
     }
 
-    private void configurePropertiesMap(){
-        mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.property_map);
-        mLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED){
+    private void configurePropertyMap(){
+
+        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.maps);
+        mProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED){
             getPropertiesNearbyAgentLocation();
 
         }else {
@@ -72,46 +82,37 @@ public class MapsActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         if (requestCode == 40){
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults.length > 0 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
                 getPropertiesNearbyAgentLocation();
             }
         }
     }
 
-    private void getProperties(){
-        propertyViewModel.getProperties().observe(this, properties -> {
-            mProperties.addAll(properties);
-            configurePropertiesMap();
-        });
-    }
-
     private void getPropertiesNearbyAgentLocation(){
 
-        Task<Location> task = mLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(this, new OnSuccessListener<Location>() {
+        Task<Location> task = mProviderClient.getLastLocation();
+        task.addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-
                 if (location != null){
-                    mapFragment.getMapAsync(new OnMapReadyCallback() {
+                    mMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(@NonNull GoogleMap googleMap) {
                             mMap = googleMap;
 
-                            for (int i = 0 ; i < mProperties.size() ; i++){
+                            for (int i = 0 ; mProperties.size() < i; i++){
 
-                                propertyViewModel.getAddressGeocode(mProperties.get(i).getAddress()).observe(mapFragment.getViewLifecycleOwner(), realStateGeocode -> {
+                                mPropertyViewModel.getAddressGeocode(mProperties.get(i).getAddress()).observe(getViewLifecycleOwner(), realStateGeocode -> {
 
                                     try {
-
                                         mMap.clear();
 
                                         double lat = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLat();
                                         double lng = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLng();
-
-                                        MarkerOptions markerOptions = new MarkerOptions();
                                         LatLng latLng = new LatLng(lat,lng);
+                                        MarkerOptions markerOptions = new MarkerOptions();
                                         markerOptions.position(latLng);
                                         mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -121,17 +122,14 @@ public class MapsActivity extends AppCompatActivity {
                                     }catch (Exception e){
                                         e.printStackTrace();
                                     }
-
                                 });
                             }
 
                         }
                     });
                 }
-
             }
         });
-
 
     }
 }

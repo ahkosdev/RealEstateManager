@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -19,16 +20,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import fr.kosdev.realestatemanager.Controllers.Fragments.DetailsFragment;
 import fr.kosdev.realestatemanager.Controllers.Fragments.HomePageFragment;
+import fr.kosdev.realestatemanager.Controllers.Fragments.MapsFragment;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewHolderAdapter;
 import fr.kosdev.realestatemanager.Models.Property;
 import fr.kosdev.realestatemanager.R;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.property_rcv)
-    RecyclerView propertyRecyclerView;
+    //@BindView(R.id.property_rcv)
+    //RecyclerView propertyRecyclerView;
     @BindView(R.id.drawer_lyt)
     DrawerLayout mDrawerLayout;
     @BindView(R.id.homepage_toolbar)
@@ -38,18 +41,22 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     private HomePageFragment homePageFragment;
     private DetailsFragment detailsFragment;
+    private Fragment mapFragment;
+    private static final int MAP_FRAGMENT = 1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        ButterKnife.bind(this);
 
+        this.configureNavigationView();
         this.configureAndShowHomePageFragment();
         this.configureAndShowDetailsFragment();
         this.configureToolbar();
         this.configureDrawerLayout();
-        this.configureNavigationView();
+
     }
 
     private void configureAndShowHomePageFragment(){
@@ -84,6 +91,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
         switch (id){
             case R.id.drawer_map_menu:
+                this.showFragment(MAP_FRAGMENT);
                 break;
 
             case R.id.property_ad_menu:
@@ -123,5 +131,31 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private void startAddPropertyActivity(){
         Intent intent = new Intent(this, AddPropertyActivity.class);
         startActivity(intent);
+    }
+
+    private void startMapActivity(){
+        Intent mapIntent = new Intent(this, MapsActivity.class);
+        startActivity(mapIntent);
+    }
+
+    private void startTransactionFragment(Fragment fragment){
+        if (fragment.isVisible()){
+            getSupportFragmentManager().beginTransaction().replace(R.id.drawer_frame_layout,fragment).commit();
+        }
+    }
+
+    private void showMapFragment(){
+        if (this.mapFragment == null) this.mapFragment = MapsFragment.newInstance();
+        this.startTransactionFragment(mapFragment);
+    }
+    private void showFragment(int fragmentIdentifier){
+        switch (fragmentIdentifier){
+            case MAP_FRAGMENT:
+                this.showMapFragment();
+                break;
+            default:
+                break;
+
+        }
     }
 }
