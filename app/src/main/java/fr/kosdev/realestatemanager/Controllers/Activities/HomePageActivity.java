@@ -139,9 +139,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void startTransactionFragment(Fragment fragment){
-        if (fragment.isVisible()){
             getSupportFragmentManager().beginTransaction().replace(R.id.drawer_frame_layout,fragment).commit();
-        }
+
     }
 
     private void showMapFragment(){

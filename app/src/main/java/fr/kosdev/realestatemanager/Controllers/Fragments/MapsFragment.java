@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -42,7 +44,7 @@ public class MapsFragment extends Fragment {
     private SupportMapFragment mMapFragment;
     private FusedLocationProviderClient mProviderClient;
     private PropertyViewModel mPropertyViewModel;
-    private List<Property> mProperties = HomePageFragment.mPropertyList;
+    private List<Property> mProperties;
 
     public static MapsFragment newInstance(){
         return (new MapsFragment());
@@ -52,8 +54,10 @@ public class MapsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
         ButterKnife.bind(this, view);
-        this.configurePropertyMap();
+
         this.configureMapViewModel();
+        //this.getMapProperties();
+        this.configurePropertyMap();
         return view;
 
     }
@@ -90,46 +94,62 @@ public class MapsFragment extends Fragment {
         }
     }
 
+    private void getMapProperties(){
+        mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), this::updateMapProperties);
+    }
+
+    private void updateMapProperties(List<Property> properties){
+        mProperties = new ArrayList<>();
+        mProperties.addAll(properties);
+    }
+
     private void getPropertiesNearbyAgentLocation(){
 
-        Task<Location> task = mProviderClient.getLastLocation();
-        task.addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null){
-                    mMapFragment.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull GoogleMap googleMap) {
-                            mMap = googleMap;
+        mPropertyViewModel.getProperties().observe(getViewLifecycleOwner(), properties -> {
 
-                            for (int i = 0 ; mProperties.size() < i; i++){
+            mProperties = new ArrayList<>();
+            mProperties.addAll(properties);
+            Task<Location> task = mProviderClient.getLastLocation();
+            task.addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null){
+                        mMapFragment.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(@NonNull GoogleMap googleMap) {
+                                mMap = googleMap;
 
-                                mPropertyViewModel.getAddressGeocode(mProperties.get(i).getAddress()).observe(getViewLifecycleOwner(), realStateGeocode -> {
+                                for (int i = 0 ; i <mProperties.size(); i++){
 
-                                    try {
-                                        mMap.clear();
+                                    mPropertyViewModel.getAddressGeocode(mProperties.get(i).getAddress()).observe(getViewLifecycleOwner(), realStateGeocode -> {
 
-                                        double lat = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLat();
-                                        double lng = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLng();
-                                        LatLng latLng = new LatLng(lat,lng);
-                                        MarkerOptions markerOptions = new MarkerOptions();
-                                        markerOptions.position(latLng);
-                                        mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-                                        mMap.setMyLocationEnabled(true);
+                                        try {
+                                            mMap.clear();
 
-                                    }catch (Exception e){
-                                        e.printStackTrace();
-                                    }
-                                });
+                                            double lat = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLat();
+                                            double lng = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLng();
+                                            LatLng latLng = new LatLng(lat,lng);
+                                            MarkerOptions markerOptions = new MarkerOptions();
+                                            markerOptions.position(latLng);
+                                            mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                                            mMap.setMyLocationEnabled(true);
+
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                        }
+                                    });
+                                }
+
                             }
-
-                        }
-                    });
+                        });
+                    }
                 }
-            }
+            });
         });
+
+
 
     }
 }
