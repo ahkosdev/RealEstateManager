@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class PropertyImageAdapter extends RecyclerView.Adapter<PropertyImageAdap
 
         @BindView(R.id.image_item_img)
         ImageView imageItem;
+        //@BindView(R.id.delete_image_fab)
+        //FloatingActionButton deleteImage;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);

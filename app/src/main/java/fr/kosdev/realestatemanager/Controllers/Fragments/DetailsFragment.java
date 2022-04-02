@@ -41,7 +41,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import fr.kosdev.realestatemanager.Controllers.Activities.ShowAllPhotosActivity;
+import fr.kosdev.realestatemanager.Controllers.Activities.UpdatePropertyActivity;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewModel;
 import fr.kosdev.realestatemanager.Injection.Injection;
 import fr.kosdev.realestatemanager.Injection.PropertyViewModelFactory;
@@ -234,6 +236,20 @@ public class DetailsFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @OnClick(R.id.update_btn)
+    public void startUpdateActivity(){
+        Intent intent = getActivity().getIntent();
+        if (intent != null){
+            if (intent.hasExtra("KEY_DETAIL")){
+                long propertyId = intent.getLongExtra("KEY_DETAIL", 0);
+                Intent updateIntent = new Intent(getActivity(), UpdatePropertyActivity.class);
+                updateIntent.putExtra("UPDATE_KEY", propertyId);
+                startActivity(updateIntent);
+            }
+        }
+
     }
 
 }

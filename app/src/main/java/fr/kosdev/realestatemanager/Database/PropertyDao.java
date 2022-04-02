@@ -8,6 +8,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -24,5 +25,8 @@ public interface PropertyDao {
 
     @Query("SELECT * FROM Property WHERE id = :propertyId")
     LiveData<Property>  getPropertyWithId(long propertyId);
+
+    @Update
+    int updateProperty(Property property);
 
 }

@@ -25,10 +25,10 @@ public class Property implements Serializable {
     private String pointsOfInterest;
     private String status;
     private String dateOfEntry;
-    private long dateOfSale;
+    private String dateOfSale;
     private String realEstateAgent;
 
-    public Property(long id, ArrayList<String> photos, String type, String price, String numberOfRooms, String surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, String dateOfEntry, String realEstateAgent) {
+    public Property(long id, ArrayList<String> photos, String type, String price, String numberOfRooms, String surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, String dateOfEntry, String dateOfSale, String realEstateAgent) {
         this.id = id;
         this.type = type;
         this.price = price;
@@ -40,7 +40,7 @@ public class Property implements Serializable {
         this.pointsOfInterest = pointsOfInterest;
         this.status = status;
         this.dateOfEntry = dateOfEntry;
-       // this.dateOfSale = dateOfSale;
+        this.dateOfSale = dateOfSale;
         this.realEstateAgent = realEstateAgent;
     }
 
@@ -151,11 +151,11 @@ public class Property implements Serializable {
         this.dateOfEntry = dateOfEntry;
     }
 
-    public long getDateOfSale() {
+    public String getDateOfSale() {
         return dateOfSale;
     }
 
-    public void setDateOfSale(long dateOfSale) {
+    public void setDateOfSale(String dateOfSale) {
         this.dateOfSale = dateOfSale;
     }
 

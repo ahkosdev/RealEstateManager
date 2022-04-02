@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Controllers.Activities.UpdatePropertyActivity"
+            android:exported="false" />
+        <activity
             android:name=".Controllers.Activities.MapsActivity"
             android:exported="false" />
         <activity

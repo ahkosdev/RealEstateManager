@@ -118,23 +118,27 @@ public class MapsFragment extends Fragment {
                             @Override
                             public void onMapReady(@NonNull GoogleMap googleMap) {
                                 mMap = googleMap;
+                                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                                mMap.setMyLocationEnabled(true);
 
                                 for (int i = 0 ; i <mProperties.size(); i++){
 
                                     mPropertyViewModel.getAddressGeocode(mProperties.get(i).getAddress()).observe(getViewLifecycleOwner(), realStateGeocode -> {
 
                                         try {
-                                            mMap.clear();
+                                            //mMap.clear();
 
                                             double lat = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLat();
                                             double lng = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLng();
-                                            LatLng latLng = new LatLng(lat,lng);
+                                            LatLng propertylatLng = new LatLng(lat,lng);
                                             MarkerOptions markerOptions = new MarkerOptions();
-                                            markerOptions.position(latLng);
+                                            markerOptions.position(propertylatLng);
                                             mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-                                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-                                            mMap.setMyLocationEnabled(true);
+                                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                                            //mMap.setMyLocationEnabled(true);
 
                                         }catch (Exception e){
                                             e.printStackTrace();

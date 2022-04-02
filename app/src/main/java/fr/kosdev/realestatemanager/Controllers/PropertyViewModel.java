@@ -60,5 +60,14 @@ public class PropertyViewModel extends ViewModel {
         return geocodeLiveData;
     }
 
+    public void updateProperty(Property property){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                propertyDataSource.updateProperty(property);
+            }
+        });
+    }
+
 
 }
