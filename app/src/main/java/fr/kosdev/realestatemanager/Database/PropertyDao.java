@@ -24,9 +24,12 @@ public interface PropertyDao {
     LiveData<List<Property>> getProperties();
 
     @Query("SELECT * FROM Property WHERE id = :propertyId")
-    LiveData<Property>  getPropertyWithId(long propertyId);
+    LiveData<Property> getPropertyWithId(long propertyId);
 
     @Update
     int updateProperty(Property property);
+
+    @Query("SELECT * FROM Property WHERE price >= :minPrice OR price <= :maxPrice")
+    LiveData<List<Property>> getPropertiesWithMinAndMaxPrice(String minPrice, String maxPrice);
 
 }

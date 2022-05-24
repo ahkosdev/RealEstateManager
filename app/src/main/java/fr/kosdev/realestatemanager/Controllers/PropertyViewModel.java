@@ -69,5 +69,9 @@ public class PropertyViewModel extends ViewModel {
         });
     }
 
+    public LiveData<List<Property>> getPropertiesWithPrice(String minPrice, String maxPrice){
+        return propertyDataSource.getPropertiesWithPrice(minPrice, maxPrice);
+    }
+
 
 }

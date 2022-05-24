@@ -13,11 +13,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -41,7 +44,7 @@ import fr.kosdev.realestatemanager.R;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class UpdatePropertyActivity extends AppCompatActivity {
+public class UpdatePropertyActivity extends AppCompatActivity implements View.OnLongClickListener {
 
     @BindView(R.id.property_type_atc_up)
     AutoCompleteTextView updatePropertyTypesAutocomplete;
@@ -71,6 +74,8 @@ public class UpdatePropertyActivity extends AppCompatActivity {
     RecyclerView propertyPhotosRcv;
     @BindView(R.id.update_tlb)
     Toolbar updateToolbar;
+    @BindView(R.id.image_selected_counter)
+    TextView imageSelectedCounter;
 
     ArrayAdapter<String> propertyTypeAdapter;
     ArrayList<String> selections = new ArrayList<>();
@@ -80,7 +85,10 @@ public class UpdatePropertyActivity extends AppCompatActivity {
     private static final int RC_CHOOSE_PHOTO = 20;
     private Uri imageSelectedUris;
     ArrayList<String> selectedImagesList;
+    ArrayList<String> deletedImagesList = new ArrayList<>();
     UpdateImageAdapter mImageAdapter;
+    public boolean isContexualModeEnable = false;
+    int counter = 0;
 
 
 
@@ -97,6 +105,7 @@ public class UpdatePropertyActivity extends AppCompatActivity {
         this.configureViewModel();
         this.showProperty();
         this.configureToolbar();
+        //delectedImagesList = new ArrayList<>();
     }
 
     @Override
@@ -110,7 +119,7 @@ public class UpdatePropertyActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_CHOOSE_PHOTO){
-            if (requestCode == RESULT_OK){
+            if (resultCode == RESULT_OK){
                 if (data.getClipData() != null){
                     int count = data.getClipData().getItemCount();
                     for (int i = 0; i< count; i++){
@@ -119,7 +128,8 @@ public class UpdatePropertyActivity extends AppCompatActivity {
                     }
                     mImageAdapter.notifyDataSetChanged();
                 }
-            }else if (data.getClipData() != null){
+            }
+            else if (data.getData() != null){
                 imageSelectedUris = data.getData();
                 selectedImagesList.add(imageSelectedUris.toString());
                 mImageAdapter.notifyDataSetChanged();
@@ -147,12 +157,14 @@ public class UpdatePropertyActivity extends AppCompatActivity {
 
     private void configureToolbar(){
         setSupportActionBar(updateToolbar);
+        imageSelectedCounter.setText("Update Property");
+
     }
 
     private void configureUpdateRecyclerView(){
         selectedImagesList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mImageAdapter = new UpdateImageAdapter(selectedImagesList);
+        mImageAdapter = new UpdateImageAdapter(selectedImagesList, UpdatePropertyActivity.this);
         propertyPhotosRcv.setAdapter(mImageAdapter);
         propertyPhotosRcv.setLayoutManager(layoutManager);
     }
@@ -324,8 +336,6 @@ public class UpdatePropertyActivity extends AppCompatActivity {
                     updateAgentName.setText(property.getRealEstateAgent());
                     availableStatus.setText(property.getStatus());
 
-
-
                 });
             }
         }
@@ -361,5 +371,64 @@ public class UpdatePropertyActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    //@Override
+    //public boolean onCreateOptionsMenu(Menu menu) {
+        //getMenuInflater().inflate(R.menu.update_menu, menu);
+        //return true;
+    //}
+
+    @Override
+    public boolean onLongClick(View view) {
+        isContexualModeEnable = true;
+        //updateToolbar.getMenu().clear();
+        updateToolbar.inflateMenu(R.menu.delete_image_menu);
+        getSupportActionBar().setTitle("0 Image Selected");
+        updateToolbar.setBackgroundColor(getColor(R.color.colorAccent));
+        mImageAdapter.notifyDataSetChanged();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        return true;
+    }
+
+    public void makeSelection(View view, int adapterPosition){
+        if (((CheckBox)view).isChecked()){
+            deletedImagesList.add(selectedImagesList.get(adapterPosition));
+            counter++;
+            updateCounter();
+
+        }else {
+            deletedImagesList.remove(selectedImagesList.get(adapterPosition));
+            counter--;
+            updateCounter();
+        }
+    }
+
+    public void updateCounter(){
+        imageSelectedCounter.setText(counter + "Item Selected");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()== R.id.delete_menu){
+            mImageAdapter.removeImage(deletedImagesList);
+            removeContextualActionMode();
+        }else if (item.getItemId()== android.R.id.home){
+            removeContextualActionMode();
+            mImageAdapter.notifyDataSetChanged();
+        }
+        return true;
+    }
+
+    private void removeContextualActionMode(){
+        isContexualModeEnable = false;
+        imageSelectedCounter.setText("Update Property");
+        updateToolbar.getMenu().clear();
+        //updateToolbar.inflateMenu(R.menu.update_menu);
+        counter = 0;
+        deletedImagesList.clear();
+        mImageAdapter.notifyDataSetChanged();
+        updateToolbar.setBackgroundColor(getColor(R.color.colorPrimary));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 }

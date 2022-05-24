@@ -28,4 +28,7 @@ public class PropertyDataRepository {
     public void updateProperty(Property property){
         propertyDao.updateProperty(property);
     }
+    public LiveData<List<Property>> getPropertiesWithPrice(String minPrice, String maxPrice){
+        return propertyDao.getPropertiesWithMinAndMaxPrice(minPrice,maxPrice);
+    }
 }

@@ -23,19 +23,21 @@
 
                 <ImageView
                     android:id="@+id/image_update_item_img"
-                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_baseline_home_work_24"
-                    />
+                    android:src="@drawable/ic_baseline_home_work_24" />
 
                 <CheckBox
                     android:id="@+id/delete_check"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="21dp"
+                    android:layout_height="36dp"
                     android:layout_alignBottom="@id/image_update_item_img"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginBottom="8dp" />
 
             </RelativeLayout>
 

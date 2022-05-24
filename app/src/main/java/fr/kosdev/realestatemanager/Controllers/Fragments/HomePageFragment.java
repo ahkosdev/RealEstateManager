@@ -18,14 +18,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import fr.kosdev.realestatemanager.Controllers.Activities.AddPropertyActivity;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewHolder;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewHolderAdapter;
@@ -41,12 +44,21 @@ public class HomePageFragment extends Fragment {
 
     @BindView(R.id.property_rcv)
     RecyclerView propertyRecyclerView;
+    @BindView(R.id.minPrice)
+    TextInputEditText searchMinPrice;
+    @BindView(R.id.maxPrice)
+    TextInputEditText searchMaxPrice;
+    @BindView(R.id.search_btn)
+    MaterialButton searchButton;
     //@BindView(R.id.add_fab)
     //FloatingActionButton addFab;
 
     private PropertyViewHolderAdapter mPropertyViewHolderAdapter;
-    public static List<Property> mPropertyList;
+    private List<Property> mPropertyList;
     PropertyViewModel mPropertyViewModel;
+    private String minPrice;
+    private String maxPrice;
+    private List<Property> searchWithPriceList;
 
 
     public HomePageFragment() {
@@ -98,6 +110,25 @@ public class HomePageFragment extends Fragment {
         mPropertyList.clear();
         mPropertyList.addAll(properties);
         mPropertyViewHolderAdapter.notifyDataSetChanged();
+    }
+
+    private void getPropertiesWithPrice(){
+        minPrice = searchMinPrice.getText().toString();
+        maxPrice = searchMaxPrice.getText().toString();
+        mPropertyViewModel.getPropertiesWithPrice(minPrice, maxPrice).observe(getViewLifecycleOwner(), this::updateWithPriceSearch);
+
+    }
+
+    private void updateWithPriceSearch(List<Property> properties){
+        searchWithPriceList = new ArrayList<>();
+        searchWithPriceList.clear();
+        searchWithPriceList.addAll(properties);
+        mPropertyViewHolderAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.search_btn)
+    public void searchPropertiesWithPrice(){
+        this.getPropertiesWithPrice();
     }
 
 }

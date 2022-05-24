@@ -27,6 +27,7 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.property_img)
     ImageView propertyImage;
 
+
     public PropertyViewHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
@@ -37,7 +38,10 @@ public class PropertyViewHolder extends RecyclerView.ViewHolder {
         propertyAddress.setText(property.getAddress());
         propertySurface.setText(property.getSurfaceOfProperty() + "m²");
         propertyPrice.setText(property.getPrice() + "$");
-        Glide.with(propertyImage.getContext()).load(property.getPhotos().get(0)).into(propertyImage);
+        for (int i = 0; i< property.getPhotos().size(); i++){
+            Glide.with(propertyImage.getContext()).load(property.getPhotos().get(i)).into(propertyImage);
+
+        }
 
     }
 
