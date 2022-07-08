@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import fr.kosdev.realestatemanager.Controllers.Activities.AddPropertyActivity;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewHolder;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewHolderAdapter;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewModel;
+import fr.kosdev.realestatemanager.Database.PropertySimpleSqliteQuery;
 import fr.kosdev.realestatemanager.Injection.Injection;
 import fr.kosdev.realestatemanager.Injection.PropertyViewModelFactory;
 import fr.kosdev.realestatemanager.Models.Property;
@@ -57,8 +59,11 @@ public class HomePageFragment extends Fragment {
     private List<Property> mPropertyList;
     PropertyViewModel mPropertyViewModel;
     private String minPrice;
-    private String maxPrice;
+    private String query;
     private List<Property> searchWithPriceList;
+    PropertySimpleSqliteQuery mSqliteQuery;
+    SimpleSQLiteQuery mQuery;
+    List<Object> conditions;
 
 
     public HomePageFragment() {
@@ -113,16 +118,15 @@ public class HomePageFragment extends Fragment {
     }
 
     private void getPropertiesWithPrice(){
-        minPrice = searchMinPrice.getText().toString();
-        maxPrice = searchMaxPrice.getText().toString();
-        mPropertyViewModel.getPropertiesWithPrice(minPrice, maxPrice).observe(getViewLifecycleOwner(), this::updateWithPriceSearch);
+        conditions = new ArrayList<>();
+        mQuery = mSqliteQuery.simpleSqliteQuery(query, conditions);
+        mPropertyViewModel.getPropertiesWithFilter(mQuery).observe(getViewLifecycleOwner(), this::updateWithPriceSearch);
 
     }
 
     private void updateWithPriceSearch(List<Property> properties){
-        searchWithPriceList = new ArrayList<>();
-        searchWithPriceList.clear();
-        searchWithPriceList.addAll(properties);
+        mPropertyList.clear();
+        mPropertyList.addAll(properties);
         mPropertyViewHolderAdapter.notifyDataSetChanged();
     }
 

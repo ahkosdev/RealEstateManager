@@ -3,10 +3,12 @@ package fr.kosdev.realestatemanager.Controllers;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import fr.kosdev.realestatemanager.Database.PropertySimpleSqliteQuery;
 import fr.kosdev.realestatemanager.Models.Property;
 import fr.kosdev.realestatemanager.Models.pojo.RealStateGeocode;
 import fr.kosdev.realestatemanager.Repositories.GeocodeRepository;
@@ -71,6 +73,10 @@ public class PropertyViewModel extends ViewModel {
 
     public LiveData<List<Property>> getPropertiesWithPrice(String minPrice, String maxPrice){
         return propertyDataSource.getPropertiesWithPrice(minPrice, maxPrice);
+    }
+    public LiveData<List<Property>> getPropertiesWithFilter(SimpleSQLiteQuery simpleSQLiteQuery){
+
+        return propertyDataSource.getPropertiesWithFilter(simpleSQLiteQuery);
     }
 
 

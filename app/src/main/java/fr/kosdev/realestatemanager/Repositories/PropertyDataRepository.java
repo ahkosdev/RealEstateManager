@@ -1,10 +1,12 @@
 package fr.kosdev.realestatemanager.Repositories;
 
 import androidx.lifecycle.LiveData;
+import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import java.util.List;
 
 import fr.kosdev.realestatemanager.Database.PropertyDao;
+import fr.kosdev.realestatemanager.Database.PropertySimpleSqliteQuery;
 import fr.kosdev.realestatemanager.Models.Property;
 
 public class PropertyDataRepository {
@@ -30,5 +32,9 @@ public class PropertyDataRepository {
     }
     public LiveData<List<Property>> getPropertiesWithPrice(String minPrice, String maxPrice){
         return propertyDao.getPropertiesWithMinAndMaxPrice(minPrice,maxPrice);
+    }
+    public LiveData<List<Property>> getPropertiesWithFilter(SimpleSQLiteQuery simpleSQLiteQuery){
+        return propertyDao.getPropertiesWithFilter(simpleSQLiteQuery);
+
     }
 }
