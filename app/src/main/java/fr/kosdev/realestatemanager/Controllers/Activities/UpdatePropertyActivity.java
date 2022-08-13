@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
@@ -29,7 +31,9 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -327,11 +331,11 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
                     selectedImagesList.addAll(property.getPhotos());
                     mImageAdapter.notifyDataSetChanged();
                     updatePropertyTypesAutocomplete.setText(property.getType());
-                    updatePriceOfProperty.setText(property.getPrice());
-                    updateSurfaceOfProperty.setText(property.getSurfaceOfProperty());
-                    updateNumberOfRooms.setText(property.getNumberOfRooms());
+                    updatePriceOfProperty.setText(Integer.toString(property.getPrice()));
+                    updateSurfaceOfProperty.setText(Integer.toString(property.getSurfaceOfProperty()));
+                    updateNumberOfRooms.setText(Integer.toString(property.getNumberOfRooms()));
                     updatePropertyAddress.setText(property.getAddress());
-                    updateSaleDate.setText(property.getDateOfEntry());
+                    //updateSaleDate.setText(property.getDateOfEntry());
                     updatePropertyDescription.setText(property.getPropertyDescription());
                     updateAgentName.setText(property.getRealEstateAgent());
                     availableStatus.setText(property.getStatus());
@@ -346,6 +350,21 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
         for (String selection : selections){
             final_userSelection = final_userSelection + selection + ",";
         }
+
+        Date dateIn = new Date();
+        Date dateOut = new Date();
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            dateIn = df.parse(updateSaleDate.getText().toString());
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        try {
+            dateOut = df.parse(updateDateOfSale.getText().toString());
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
         Intent intent = getIntent();
         if (intent != null){
             if (intent.hasExtra("UPDATE_KEY")){
@@ -355,15 +374,17 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
                         propertyId,
                         selectedImagesList,
                         updatePropertyTypesAutocomplete.getText().toString(),
-                        updatePriceOfProperty.getText().toString(),
-                        updateNumberOfRooms.getText().toString(),
-                        updateSurfaceOfProperty.getText().toString(),
+                        Integer.parseInt(updatePriceOfProperty.getText().toString()),
+                        Integer.parseInt(updateNumberOfRooms.getText().toString()),
+                        Integer.parseInt(updateSurfaceOfProperty.getText().toString()),
                         updatePropertyDescription.getText().toString(),
                         updatePropertyAddress.getText().toString(),
                         final_userSelection,
                         soldStatus.getText().toString(),
-                        updateSaleDate.getText().toString(),
-                        updateDateOfSale.getText().toString(),
+                        dateIn,
+                        dateOut,
+                        //updateSaleDate.getText().toString(),
+                        //updateDateOfSale.getText().toString(),
                         updateAgentName.getText().toString()
                 );
                 mPropertyViewModel.updateProperty(updateProperty);

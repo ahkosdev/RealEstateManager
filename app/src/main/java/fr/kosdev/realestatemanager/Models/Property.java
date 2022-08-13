@@ -4,10 +4,15 @@ import android.net.Uri;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import fr.kosdev.realestatemanager.Utils.DateConverter;
 
 @Entity
 public class Property implements Serializable {
@@ -15,20 +20,22 @@ public class Property implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String type;
-    private String price;
-    private String numberOfRooms;
-    private String surfaceOfProperty;
+    private int price;
+    private int numberOfRooms;
+    private int surfaceOfProperty;
     private String propertyDescription;
     //private String photo;
      ArrayList<String> photos;
     private String address;
     private String pointsOfInterest;
     private String status;
-    private String dateOfEntry;
-    private String dateOfSale;
+    @TypeConverters(DateConverter.class)
+    private Date dateOfEntry;
+    @TypeConverters(DateConverter.class)
+    private Date dateOfSale;
     private String realEstateAgent;
 
-    public Property(long id, ArrayList<String> photos, String type, String price, String numberOfRooms, String surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, String dateOfEntry, String dateOfSale, String realEstateAgent) {
+    public Property(long id, ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
         this.id = id;
         this.type = type;
         this.price = price;
@@ -70,27 +77,27 @@ public class Property implements Serializable {
         this.type = type;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getNumberOfRooms() {
+    public int getNumberOfRooms() {
         return numberOfRooms;
     }
 
-    public void setNumberOfRooms(String numberOfRooms) {
+    public void setNumberOfRooms(int numberOfRooms) {
         this.numberOfRooms = numberOfRooms;
     }
 
-    public String getSurfaceOfProperty() {
+    public int getSurfaceOfProperty() {
         return surfaceOfProperty;
     }
 
-    public void setSurfaceOfProperty(String surfaceOfProperty) {
+    public void setSurfaceOfProperty(int surfaceOfProperty) {
         this.surfaceOfProperty = surfaceOfProperty;
     }
 
@@ -143,19 +150,19 @@ public class Property implements Serializable {
         this.status = status;
     }
 
-    public String getDateOfEntry() {
+    public Date getDateOfEntry() {
         return dateOfEntry;
     }
 
-    public void setDateOfEntry(String dateOfEntry) {
+    public void setDateOfEntry(Date dateOfEntry) {
         this.dateOfEntry = dateOfEntry;
     }
 
-    public String getDateOfSale() {
+    public Date getDateOfSale() {
         return dateOfSale;
     }
 
-    public void setDateOfSale(String dateOfSale) {
+    public void setDateOfSale(Date dateOfSale) {
         this.dateOfSale = dateOfSale;
     }
 

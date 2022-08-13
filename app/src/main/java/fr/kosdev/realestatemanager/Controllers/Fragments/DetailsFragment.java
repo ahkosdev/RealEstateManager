@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -122,6 +123,7 @@ public class DetailsFragment extends Fragment {
     }
     private void getPropertyDetails(){
         photoUris = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         Intent intent = getActivity().getIntent();
         if (intent != null){
             if (intent.hasExtra("KEY_DETAIL")){
@@ -130,9 +132,9 @@ public class DetailsFragment extends Fragment {
                     photoUris.addAll(property.getPhotos());
                     Glide.with(this).load(photoUris.get(0)).into(detailImages);
                     propertyDetailType.setText(property.getType() + "," + property.getStatus());
-                    propertyDetailPrice.setText(property.getPrice());
+                    propertyDetailPrice.setText(Integer.toString(property.getPrice()));
                     propertyShortDescription.setText(property.getAddress() + "," + property.getSurfaceOfProperty());
-                    detailSaleDate.setText(property.getDateOfEntry());
+                    detailSaleDate.setText(sdf.format(property.getDateOfEntry()));
                     detailAgentName.setText(property.getRealEstateAgent());
                     detailPropertyDescription.setText(property.getPropertyDescription());
                     proximityPointOfInterest.setText(property.getPointsOfInterest());

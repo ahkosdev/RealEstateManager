@@ -33,7 +33,11 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -327,6 +331,20 @@ public class AddPropertyActivity extends AppCompatActivity {
                     final_userSelection = final_userSelection + selection + ",";
 
                 }
+                Date date = new Date();
+                Date dateOut = new Date();
+                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                try {
+                    date = df.parse(saleDate.getText().toString());
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+
+                try {
+                    dateOut = df.parse(dateOfSale.getText().toString());
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
 
                 long id = (long) (Math.random()*50000);
                 Property property = new Property(
@@ -334,16 +352,18 @@ public class AddPropertyActivity extends AppCompatActivity {
                         //uriImageSelected.toString(),
                         imagesUriList,
                         propertyTypesAutocomplete.getText().toString(),
-                        priceOfProperty.getText().toString(),
-                        numberOfRooms.getText().toString(),
-                        surfaceOfProperty.getText().toString(),
+                        Integer.parseInt(priceOfProperty.getText().toString()),
+                        Integer.parseInt(numberOfRooms.getText().toString()),
+                        Integer.parseInt(surfaceOfProperty.getText().toString()),
                         propertyDescription.getText().toString(),
                         propertyAddress.getText().toString(),
                         final_userSelection,
                         //selections.toString(),
                         availableStatus.getText().toString(),
-                        saleDate.getText().toString(),
-                        dateOfSale.getText().toString(),
+                        date,
+                        dateOut,
+                        //saleDate.getText().toString(),
+                        //dateOfSale.getText().toString(),
                         agentName.getText().toString()
 
 
