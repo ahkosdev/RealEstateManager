@@ -5,15 +5,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -61,6 +66,7 @@ public class AddPropertyActivity extends AppCompatActivity {
     @BindView(R.id.property_area_txt)TextInputEditText surfaceOfProperty;
     @BindView(R.id.rooms_number_txt) TextInputEditText numberOfRooms;
     @BindView(R.id.property_address_txt) TextInputEditText propertyAddress;
+    @BindView(R.id.property_city_txt) TextInputEditText propertyCity;
     @BindView(R.id.sale_date_picker) TextInputEditText saleDate;
     @BindView(R.id.sold_date_picker) TextInputEditText dateOfSale;
     @BindView(R.id.available_chip)
@@ -83,6 +89,9 @@ public class AddPropertyActivity extends AppCompatActivity {
      ArrayList<String> imagesUriList;
     private int position = 0;
     PropertyImageAdapter imageAdapter;
+    private final int NOTIFICATION_ID = 001;
+    private final String NOTIFICATION_TAG = "RealStateManager";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -333,7 +342,7 @@ public class AddPropertyActivity extends AppCompatActivity {
                 }
                 Date date = new Date();
                 Date dateOut = new Date();
-                DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                DateFormat df = new SimpleDateFormat("d MMMM yyyy");
                 try {
                     date = df.parse(saleDate.getText().toString());
                 }catch (ParseException e){
@@ -357,6 +366,7 @@ public class AddPropertyActivity extends AppCompatActivity {
                         Integer.parseInt(surfaceOfProperty.getText().toString()),
                         propertyDescription.getText().toString(),
                         propertyAddress.getText().toString(),
+                        propertyCity.getText().toString(),
                         final_userSelection,
                         //selections.toString(),
                         availableStatus.getText().toString(),
@@ -370,9 +380,38 @@ public class AddPropertyActivity extends AppCompatActivity {
 
                 );
                 propertyViewModel.createProperty(property);
+                long propertyId = property.getId();
+                sendVisualNotification();
                 finish();
             }
         });
+    }
+
+    private void sendVisualNotification(){
+
+        Intent intent = new Intent(this, DetailsActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        String channelId = "default_channel";
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                .setContentTitle("Notification")
+                .setContentText("New Property is added Successfully")
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+            CharSequence channelName = "Success Notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+            notificationManager.createNotificationChannel(channel);
+        }
+        notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
+
+
     }
 
 

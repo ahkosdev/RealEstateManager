@@ -13,7 +13,8 @@
         <ImageView
             android:id="@+id/property_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            />
 
     </LinearLayout>
 
@@ -21,31 +22,28 @@
         android:layout_width="0dp"
         android:layout_weight="70"
         android:layout_height="150dp"
+        android:layout_marginLeft="@dimen/container_margin_start_end"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/type_property_txt"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/address_property_txt"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/surface_property_txt"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/price_property_txt"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>

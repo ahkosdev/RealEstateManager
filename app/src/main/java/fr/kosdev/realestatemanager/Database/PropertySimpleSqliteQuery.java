@@ -94,9 +94,8 @@ public class PropertySimpleSqliteQuery{
                 select += " WHERE";
                 containsCondition = true;
             }
-            select += " address LIKE %?%";
-            conditions.add(searchAddress);
-
+            select += " address LIKE '%"+ searchAddress + "%'";
+            //conditions.add(searchAddress);
         }
 
 
@@ -109,13 +108,13 @@ public class PropertySimpleSqliteQuery{
             }
             select += " dateOfEntry <= ?";
             Date date = new Date();
-            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            DateFormat df = new SimpleDateFormat("d MMMM yyyy");
             try {
                 date = df.parse(searchDate);
             }catch (ParseException e){
                 e.printStackTrace();
             }
-            conditions.add(date.getDate());
+            conditions.add(date.getTime());
         }
         select += ";";
 

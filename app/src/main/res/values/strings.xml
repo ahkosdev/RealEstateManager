@@ -15,10 +15,14 @@
         <item> House </item>
     </string-array>
     <string name="property_price"> Price </string>
-    <string name="property_surface"> Area </string>
+    <string name="min_price"> Min Price </string>
+    <string name="max_price"> Max Price </string>
+    <string name="property_surface"> Surface </string>
+    <string name="min_surface"> Min Surface </string>
+    <string name="max_surface"> Max Surface </string>
     <string name="rooms_number"> Number Of Rooms </string>
     <string name="property_address"> Address </string>
-
+    <string name="property_city"> City </string>
     <string name="point_interest"> Point Of Interest </string>
     <string name="school"> School </string>
     <string name="high_school"> High School </string>
@@ -30,7 +34,7 @@
     <string name="museum"> Museum </string>
     <string name="stadium"> Stadium </string>
     <string name="night_club"> Night Club </string>
-    <string name="sale_date"> Sale Date </string>
+    <string name="sale_date"> On-Sale Date </string>
     <string name="date_sale"> Date Of Sale </string>
     <string name="sale_agent"> Real Estate Agent </string>
     <string name="description"> Property Description </string>
@@ -39,6 +43,18 @@
     <string name="save_button_text"> Save </string>
     <string name="add_photo_button_text"> Add Photos </string>
     <string name="no_image_choose_text"> Please choose a photo </string>
+    <string name="search_btn"> Search </string>
+
+    //Loan Simulator
+    <string name="loan_amount"> Desired Amount </string>
+    <string name="hint_period"> Loan Period </string>
+    <string name="hint_interest"> Interest Rate </string>
+    <string name="hint_monthly"> Monthly Payment </string>
+    <string name="hint_interest_total"> Total Interest for Loan </string>
+    <string name="hint_total_payment"> Total Payment </string>
+    <string name="hint_loan_calculator_btn"> Simulate My Loan </string>
+    <string name="error_loan_amount"> Please enter loan amount </string>
+    <string name="error_loan_period"> please choose a loan period </string>
 
     <string name="map"> Map </string>
     <string name="property_ad">Add Property</string>

@@ -9,6 +9,9 @@
         <item
             android:id="@+id/property_ad_menu"
             android:title="@string/property_ad"/>
+        <item
+            android:id="@+id/loan_menu"
+            android:title="Ask For Loan"/>
     </group>
 
 </menu>

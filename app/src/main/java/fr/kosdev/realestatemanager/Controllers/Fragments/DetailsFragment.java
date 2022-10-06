@@ -131,13 +131,13 @@ public class DetailsFragment extends Fragment {
                 propertyDetailViewModel.getProperty(propertyId).observe(this, property -> {
                     photoUris.addAll(property.getPhotos());
                     Glide.with(this).load(photoUris.get(0)).into(detailImages);
-                    propertyDetailType.setText(property.getType() + "," + property.getStatus());
-                    propertyDetailPrice.setText(Integer.toString(property.getPrice()));
-                    propertyShortDescription.setText(property.getAddress() + "," + property.getSurfaceOfProperty());
-                    detailSaleDate.setText(sdf.format(property.getDateOfEntry()));
-                    detailAgentName.setText(property.getRealEstateAgent());
+                    propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
+                    propertyDetailPrice.setText( "Price : " + Integer.toString(property.getPrice()) + "$");
+                    propertyShortDescription.setText(property.getAddress());
+                    detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
+                    detailAgentName.setText("By : " + property.getRealEstateAgent());
                     detailPropertyDescription.setText(property.getPropertyDescription());
-                    proximityPointOfInterest.setText(property.getPointsOfInterest());
+                    proximityPointOfInterest.setText("Next to : " + property.getPointsOfInterest());
 
                     mProperty = property;
                     configureMap();
@@ -157,6 +157,30 @@ public class DetailsFragment extends Fragment {
         //detailPropertyDescription.setText(property.getPropertyDescription());
         //proximityPointOfInterest.setText(property.getPointsOfInterest());
 
+    }
+    private void getPropertyDetailFromMap(){
+        photoUris = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        Intent intent = getActivity().getIntent();
+        if (intent != null){
+            if (intent.hasExtra("MAP_KEY_DETAIL")){
+                long propertyId = intent.getLongExtra("MAP_KEY_DETAIL", 0);
+                propertyDetailViewModel.getProperty(propertyId).observe(this, property -> {
+                    photoUris.addAll(property.getPhotos());
+                    Glide.with(this).load(photoUris.get(0)).into(detailImages);
+                    propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
+                    propertyDetailPrice.setText( "Price : " + Integer.toString(property.getPrice()) + "$");
+                    propertyShortDescription.setText(property.getAddress());
+                    detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
+                    detailAgentName.setText("By : " + property.getRealEstateAgent());
+                    detailPropertyDescription.setText(property.getPropertyDescription());
+                    proximityPointOfInterest.setText("Next to : " + property.getPointsOfInterest());
+
+                    mProperty = property;
+                    configureMap();
+                });
+            }
+        }
     }
 
 

@@ -48,11 +48,11 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.update_menu, menu);
-       return true;
-    }
+    //@Override
+    //public boolean onCreateOptionsMenu(Menu menu) {
+        //getMenuInflater().inflate(R.menu.update_menu, menu);
+       //return true;
+    //}
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

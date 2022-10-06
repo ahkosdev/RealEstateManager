@@ -27,6 +27,7 @@ public class Property implements Serializable {
     //private String photo;
      ArrayList<String> photos;
     private String address;
+    private String city;
     private String pointsOfInterest;
     private String status;
     @TypeConverters(DateConverter.class)
@@ -35,7 +36,7 @@ public class Property implements Serializable {
     private Date dateOfSale;
     private String realEstateAgent;
 
-    public Property(long id, ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
+    public Property(long id, ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String city, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
         this.id = id;
         this.type = type;
         this.price = price;
@@ -44,6 +45,7 @@ public class Property implements Serializable {
         this.propertyDescription = propertyDescription;
         this.photos = photos;
         this.address = address;
+        this.city = city;
         this.pointsOfInterest = pointsOfInterest;
         this.status = status;
         this.dateOfEntry = dateOfEntry;
@@ -132,6 +134,14 @@ public class Property implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getPointsOfInterest() {

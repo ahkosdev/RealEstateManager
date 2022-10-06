@@ -60,6 +60,8 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
     TextInputEditText updateNumberOfRooms;
     @BindView(R.id.property_address_txt_up)
     TextInputEditText updatePropertyAddress;
+    @BindView(R.id.update_property_city_txt)
+    TextInputEditText updatePropertyCity;
     @BindView(R.id.sale_date_picker_up)
     TextInputEditText updateSaleDate;
     @BindView(R.id.sold_date_picker_up)
@@ -353,7 +355,7 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
 
         Date dateIn = new Date();
         Date dateOut = new Date();
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        DateFormat df = new SimpleDateFormat("d MMMM yyyy");
         try {
             dateIn = df.parse(updateSaleDate.getText().toString());
         }catch (ParseException e){
@@ -379,6 +381,7 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
                         Integer.parseInt(updateSurfaceOfProperty.getText().toString()),
                         updatePropertyDescription.getText().toString(),
                         updatePropertyAddress.getText().toString(),
+                        updatePropertyCity.getText().toString(),
                         final_userSelection,
                         soldStatus.getText().toString(),
                         dateIn,

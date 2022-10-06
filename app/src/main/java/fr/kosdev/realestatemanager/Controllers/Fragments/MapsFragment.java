@@ -1,6 +1,7 @@
 package fr.kosdev.realestatemanager.Controllers.Fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import fr.kosdev.realestatemanager.Controllers.Activities.DetailsActivity;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewModel;
 import fr.kosdev.realestatemanager.Injection.Injection;
 import fr.kosdev.realestatemanager.Injection.PropertyViewModelFactory;
@@ -125,6 +128,8 @@ public class MapsFragment extends Fragment {
 
                                 for (int i = 0 ; i <mProperties.size(); i++){
 
+                                    String propertyAddress = mProperties.get(i).getAddress();
+                                    long propertyId = mProperties.get(i).getId();
                                     mPropertyViewModel.getAddressGeocode(mProperties.get(i).getAddress()).observe(getViewLifecycleOwner(), realStateGeocode -> {
 
                                         try {
@@ -132,13 +137,38 @@ public class MapsFragment extends Fragment {
 
                                             double lat = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLat();
                                             double lng = realStateGeocode.getResults().get(0).getGeometry().getLocation().getLng();
+                                            //String placeId = realStateGeocode.getResults().get(0).getPlaceId();
                                             LatLng propertylatLng = new LatLng(lat,lng);
                                             MarkerOptions markerOptions = new MarkerOptions();
                                             markerOptions.position(propertylatLng);
-                                            mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                                            markerOptions.title(propertyAddress);
+                                            mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))).setTag(propertyId);
+                                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                                @Override
+                                                public void onInfoWindowClick(@NonNull Marker marker) {
+                                                    long propertyId = (long) marker.getTag();
+                                                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                                                    intent.putExtra("MAP_KEY_DETAIL", propertyId);
+                                                    startActivity(intent);
+
+                                                }
+                                            });
+
+                                            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                                @Override
+                                                public boolean onMarkerClick(@NonNull Marker marker) {
+
+                                                    long propertyId = (long) marker.getTag();
+                                                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                                                    intent.putExtra("MAP_KEY_DETAIL", propertyId);
+                                                    startActivity(intent);
+                                                    return false;
+                                                }
+                                            });
                                             //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                                             //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
                                             //mMap.setMyLocationEnabled(true);
+
 
                                         }catch (Exception e){
                                             e.printStackTrace();
