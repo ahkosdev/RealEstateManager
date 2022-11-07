@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="false"
@@ -39,6 +41,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD82JMaZzTg-SzGWcB4vpt_qdKQGQ9JvBo" />
+        
+        <provider
+            android:authorities="fr.kosdev.realestatemanager.Provider"
+            android:name=".Provider.PropertyContentProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>

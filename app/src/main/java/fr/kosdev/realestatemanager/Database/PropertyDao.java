@@ -30,6 +30,9 @@ public interface PropertyDao {
     @Query("SELECT * FROM Property WHERE id = :propertyId")
     LiveData<Property> getPropertyWithId(long propertyId);
 
+    @Query("SELECT * FROM Property WHERE id = :propertyId")
+    Cursor getPropertyWithCursor(long propertyId);
+
     @Update
     int updateProperty(Property property);
 

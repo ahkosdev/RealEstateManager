@@ -1,5 +1,6 @@
 package fr.kosdev.realestatemanager.Models;
 
+import android.content.ContentValues;
 import android.net.Uri;
 
 import androidx.room.Entity;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.kosdev.realestatemanager.Utils.Converters;
 import fr.kosdev.realestatemanager.Utils.DateConverter;
 
 @Entity
@@ -35,9 +37,14 @@ public class Property implements Serializable {
     @TypeConverters(DateConverter.class)
     private Date dateOfSale;
     private String realEstateAgent;
+    //@TypeConverters(DateConverter.class)
+    //private Long dateOfEntry;
+    //private Long dateOfSale;
 
-    public Property(long id, ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String city, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
-        this.id = id;
+    public Property(){}
+
+    public Property( ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String city, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
+        //this.id = id;
         this.type = type;
         this.price = price;
         this.numberOfRooms = numberOfRooms;
@@ -53,15 +60,6 @@ public class Property implements Serializable {
         this.realEstateAgent = realEstateAgent;
     }
 
-
-
-
-    // public Property(String type, String price, String surfaceOfProperty, String address) {
-        //this.type = type;
-       //this.price = price;
-        //this.surfaceOfProperty = surfaceOfProperty;
-        //this.address = address;
-    //}
 
     public long getId() {
         return id;
@@ -182,5 +180,27 @@ public class Property implements Serializable {
 
     public void setRealEstateAgent(String realEstateAgent) {
         this.realEstateAgent = realEstateAgent;
+    }
+
+    public static Property convertContentValue(ContentValues values){
+
+        final Property contentProperty = new Property();
+        if (values.containsKey("photos")) contentProperty.setPhotos(Converters.fromString(values.getAsString("photos")));
+        if (values.containsKey("type")) contentProperty.setType(values.getAsString("type"));
+        if (values.containsKey("price")) contentProperty.setPrice(values.getAsInteger("price"));
+        if (values.containsKey("numberOfRooms")) contentProperty.setNumberOfRooms(values.getAsInteger("numberOfRooms"));
+        if (values.containsKey("surfaceOfProperty")) contentProperty.setSurfaceOfProperty(values.getAsInteger("surfaceOfProperty"));
+        if (values.containsKey("propertyDescription")) contentProperty.setPropertyDescription(values.getAsString("propertyDescription"));
+        if (values.containsKey("address")) contentProperty.setAddress(values.getAsString("address"));
+        if (values.containsKey("city")) contentProperty.setCity(values.getAsString("city"));
+        if (values.containsKey("pointsOfInterest")) contentProperty.setPointsOfInterest(values.getAsString("pointsOfInterest"));
+        if (values.containsKey("status")) contentProperty.setStatus(values.getAsString("status"));
+        if (values.containsKey("dateOfEntry")) contentProperty.setDateOfEntry(DateConverter.toDate(values.getAsLong("dateOfEntry")));
+        if (values.containsKey("dateOfSale")) contentProperty.setDateOfSale(DateConverter.toDate(values.getAsLong("dateOfEntry")));
+        if (values.containsKey("realEstateAgent")) contentProperty.setRealEstateAgent(values.getAsString("realEstateAgent"));
+
+
+        return contentProperty;
+
     }
 }

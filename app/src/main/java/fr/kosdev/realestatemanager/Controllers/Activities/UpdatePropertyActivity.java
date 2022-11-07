@@ -355,6 +355,8 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
 
         Date dateIn = new Date();
         Date dateOut = new Date();
+        //Long dateIn;
+        //Long dateOut;
         DateFormat df = new SimpleDateFormat("d MMMM yyyy");
         try {
             dateIn = df.parse(updateSaleDate.getText().toString());
@@ -373,7 +375,7 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
                 long propertyId = intent.getLongExtra("UPDATE_KEY", 0);
 
                 Property updateProperty = new Property(
-                        propertyId,
+                        //propertyId,
                         selectedImagesList,
                         updatePropertyTypesAutocomplete.getText().toString(),
                         Integer.parseInt(updatePriceOfProperty.getText().toString()),

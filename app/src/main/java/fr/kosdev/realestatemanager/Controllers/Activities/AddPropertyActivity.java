@@ -17,6 +17,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -342,6 +344,8 @@ public class AddPropertyActivity extends AppCompatActivity {
                 }
                 Date date = new Date();
                 Date dateOut = new Date();
+                //Long date;
+                //Long dateOut;
                 DateFormat df = new SimpleDateFormat("d MMMM yyyy");
                 try {
                     date = df.parse(saleDate.getText().toString());
@@ -357,7 +361,7 @@ public class AddPropertyActivity extends AppCompatActivity {
 
                 long id = (long) (Math.random()*50000);
                 Property property = new Property(
-                        id,
+                       // id,
                         //uriImageSelected.toString(),
                         imagesUriList,
                         propertyTypesAutocomplete.getText().toString(),
@@ -380,8 +384,34 @@ public class AddPropertyActivity extends AppCompatActivity {
 
                 );
                 propertyViewModel.createProperty(property);
-                long propertyId = property.getId();
-                sendVisualNotification();
+
+                Uri uri = Uri.parse(property.getPhotos().get(0));
+                //Bitmap bitmap = MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(), Uri.parse(property.getPhotos().get(0)));
+
+                Intent intent = new Intent(view.getContext(), DetailsActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(view.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+                String channelId = "default_channel";
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(view.getContext(), channelId)
+                        .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                        .setContentTitle(property.getAddress())
+                        .setContentText("New Property is added Successfully")
+                        .setLargeIcon(BitmapFactory.decodeFile("property.getPhotos()"))
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+                    CharSequence channelName = "Success Notifications";
+                    int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                    NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+                    notificationManager.createNotificationChannel(channel);
+                }
+                notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
+
+
+                //sendVisualNotification();
                 finish();
             }
         });
