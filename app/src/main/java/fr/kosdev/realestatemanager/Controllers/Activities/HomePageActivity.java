@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.navigation.NavigationView;
@@ -84,7 +86,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
         switch (id){
             case R.id.drawer_map_menu:
-                this.showFragment(MAP_FRAGMENT);
+                //this.showFragment(MAP_FRAGMENT);
+                this.startMapActivity();
                 break;
 
             case R.id.property_ad_menu:

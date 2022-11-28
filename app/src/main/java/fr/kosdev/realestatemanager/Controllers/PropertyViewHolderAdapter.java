@@ -20,6 +20,7 @@ public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyView
 
     private List<Property> propertyList;
     private long propertyId;
+    private DetailsFragment detailsFragment;
 
     public PropertyViewHolderAdapter(List<Property> propertyList) {
         this.propertyList = propertyList;
@@ -40,10 +41,12 @@ public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyView
             @Override
             public void onClick(View view) {
                 propertyId = propertyList.get(position).getId();
-                Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-                //intent.putExtra("idKey", (Serializable)property);
-                intent.putExtra("KEY_DETAIL", propertyId);
-                view.getContext().startActivity(intent);
+                if (detailsFragment == null || !detailsFragment.isVisible()){
+                    Intent intent = new Intent(view.getContext(), DetailsActivity.class);
+                    intent.putExtra("KEY_DETAIL", propertyId);
+                    view.getContext().startActivity(intent);
+                }
+
             }
         });
 

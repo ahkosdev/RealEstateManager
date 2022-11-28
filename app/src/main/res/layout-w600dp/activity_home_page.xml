@@ -11,12 +11,57 @@
     <FrameLayout
         android:id="@+id/homepage_frame_layout"
         android:layout_width="0dp"
-        android:layout_weight="30"
-        android:layout_height="match_parent"/>
+        android:layout_weight="40"
+        android:layout_height="match_parent"
+        >
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_lyt"
+            android:layout_width="300dp"
+            android:layout_height="900dp"
+            android:fitsSystemWindows="true"
+            tools:openDrawer="start">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/homepage_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+                <FrameLayout
+                    android:id="@+id/drawer_frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/drawer_nav_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                app:headerLayout="@layout/drawer_nav_header"
+                app:menu="@menu/drawer_nav_menu"
+                android:fitsSystemWindows="true"
+                />
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/details_frame_layout"
         android:layout_width="0dp"
-        android:layout_weight="70"
-        android:layout_height="match_parent"/>
+        android:layout_weight="60"
+        android:layout_height="match_parent">
+
+
+    </FrameLayout>
+
+
 </LinearLayout>

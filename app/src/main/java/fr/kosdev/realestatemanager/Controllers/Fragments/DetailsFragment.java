@@ -218,7 +218,7 @@ public class DetailsFragment extends Fragment {
                         @Override
                         public void onMapReady(@NonNull GoogleMap googleMap) {
                             mMap = googleMap;
-                           // LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             //mMap.addMarker(new MarkerOptions().position(latLng).title("my position"));
                             //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                             //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
