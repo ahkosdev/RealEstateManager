@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,7 +22,10 @@ import butterknife.ButterKnife;
 import fr.kosdev.realestatemanager.Controllers.Fragments.DetailsFragment;
 import fr.kosdev.realestatemanager.Controllers.Fragments.HomePageFragment;
 import fr.kosdev.realestatemanager.Controllers.Fragments.MapsFragment;
+import fr.kosdev.realestatemanager.Controllers.PropertyViewHolderAdapter;
+import fr.kosdev.realestatemanager.Models.Property;
 import fr.kosdev.realestatemanager.R;
+import fr.kosdev.realestatemanager.Utils.ItemClickSupport;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,11 +37,14 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     Toolbar mToolbar;
     @BindView(R.id.drawer_nav_view)
     NavigationView mNavigationView;
+    @BindView(R.id.property_rcv)
+    RecyclerView propertyRecyclerView;
 
     private HomePageFragment homePageFragment;
     private DetailsFragment detailsFragment;
     private Fragment mapFragment;
     private static final int MAP_FRAGMENT = 1;
+    PropertyViewHolderAdapter propertyAdapter;
 
 
     @Override
@@ -51,6 +58,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         this.configureAndShowDetailsFragment();
         this.configureToolbar();
         this.configureDrawerLayout();
+        this.configureOnClickRecyclerView();
+
 
     }
 
@@ -73,8 +82,28 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.details_frame_layout,detailsFragment)
                     .commit();
+
         }
+
     }
+
+    private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(propertyRecyclerView, R.layout.property_list_items)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Property property = propertyAdapter.getProperty(position);
+                        long propertyId = property.getId();
+                        if ( detailsFragment != null && detailsFragment.isVisible()){
+                            detailsFragment.tabletPropertyDetails(propertyId);
+                        }
+                    }
+                });
+    }
+
+
+
+
 
     private void configureToolbar(){
         setSupportActionBar(mToolbar);

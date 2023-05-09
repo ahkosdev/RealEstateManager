@@ -70,7 +70,8 @@ public class DetailsFragment extends Fragment {
     TextView detailSaleDate;
     @BindView(R.id.detail_agent_name)
     TextView detailAgentName;
-    @BindView(R.id.description_txt) TextView detailPropertyDescription;
+    @BindView(R.id.description_txt)
+    TextView detailPropertyDescription;
 
 
     private GoogleMap mMap;
@@ -80,8 +81,6 @@ public class DetailsFragment extends Fragment {
     private Property mProperty;
     private PropertyViewModel propertyDetailViewModel;
     private List<String> addressList;
-
-
 
 
     @Override
@@ -97,8 +96,8 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = getActivity().getIntent();
-                if (intent != null){
-                    if (intent.hasExtra("KEY_DETAIL")){
+                if (intent != null) {
+                    if (intent.hasExtra("KEY_DETAIL")) {
                         long propertyId = intent.getLongExtra("KEY_DETAIL", 0);
                         Intent photosIntent = new Intent(getActivity(), ShowAllPhotosActivity.class);
                         photosIntent.putExtra("photosKey", propertyId);
@@ -116,27 +115,28 @@ public class DetailsFragment extends Fragment {
 
     }
 
-    private void configureViewModel(){
+    private void configureViewModel() {
         PropertyViewModelFactory propertyViewModelFactory = Injection.providePropertyViewModelFactory(getContext());
         propertyDetailViewModel = new ViewModelProvider(this, propertyViewModelFactory).get(PropertyViewModel.class);
         propertyDetailViewModel.init();
     }
-    private void getPropertyDetails(){
+
+    private void getPropertyDetails() {
         photoUris = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         Intent intent = getActivity().getIntent();
-        if (intent != null){
-            if (intent.hasExtra("KEY_DETAIL")){
-                long propertyId = intent.getLongExtra("KEY_DETAIL",0);
+        if (intent != null) {
+            if (intent.hasExtra("KEY_DETAIL")) {
+                long propertyId = intent.getLongExtra("KEY_DETAIL", 0);
                 propertyDetailViewModel.getProperty(propertyId).observe(this, property -> {
                     photoUris.addAll(property.getPhotos());
-                    if (photoUris.size() > 0){
+                    if (photoUris.size() > 0) {
 
                         Glide.with(this).load(photoUris.get(0)).into(detailImages);
                     }
 
                     propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
-                    propertyDetailPrice.setText( "Price : " + Integer.toString(property.getPrice()) + "$");
+                    propertyDetailPrice.setText("Price : " + Integer.toString(property.getPrice()) + "$");
                     propertyShortDescription.setText(property.getAddress());
                     detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
                     detailAgentName.setText("By : " + property.getRealEstateAgent());
@@ -148,16 +148,16 @@ public class DetailsFragment extends Fragment {
 
                 });
 
-            } else if (intent.hasExtra("MAP_KEY_DETAIL")){
+            } else if (intent.hasExtra("MAP_KEY_DETAIL")) {
                 long propertyId = intent.getLongExtra("MAP_KEY_DETAIL", 0);
                 propertyDetailViewModel.getProperty(propertyId).observe(getViewLifecycleOwner(), property -> {
                     photoUris.addAll(property.getPhotos());
-                    if (photoUris.size() > 0 ){
+                    if (photoUris.size() > 0) {
 
                         Glide.with(this).load(photoUris.get(0)).into(detailImages);
                     }
                     propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
-                    propertyDetailPrice.setText( "Price : " + Integer.toString(property.getPrice()) + "$");
+                    propertyDetailPrice.setText("Price : " + Integer.toString(property.getPrice()) + "$");
                     propertyShortDescription.setText(property.getAddress());
                     detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
                     detailAgentName.setText("By : " + property.getRealEstateAgent());
@@ -173,6 +173,38 @@ public class DetailsFragment extends Fragment {
 
 
     }
+
+    public void tabletPropertyDetails(long propertyId) {
+
+        photoUris = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+        propertyDetailViewModel.getProperty(propertyId).observe(this, property -> {
+            photoUris.addAll(property.getPhotos());
+            if (photoUris.size() > 0) {
+
+                Glide.with(this).load(photoUris.get(0)).into(detailImages);
+            }
+
+            propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
+            propertyDetailPrice.setText("Price : " + Integer.toString(property.getPrice()) + "$");
+            propertyShortDescription.setText(property.getAddress());
+            detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
+            detailAgentName.setText("By : " + property.getRealEstateAgent());
+            detailPropertyDescription.setText(property.getPropertyDescription());
+            proximityPointOfInterest.setText("Next to : " + property.getPointsOfInterest());
+
+            mProperty = property;
+            configureMap();
+
+        });
+
+}
+
+
+
+
+
 
 
 

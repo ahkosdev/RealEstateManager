@@ -56,4 +56,8 @@ public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyView
     public int getItemCount() {
         return propertyList.size();
     }
+
+    public Property getProperty(int position){
+        return this.propertyList.get(position);
+    }
 }
