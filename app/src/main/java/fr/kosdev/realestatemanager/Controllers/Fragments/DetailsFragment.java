@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -72,6 +74,8 @@ public class DetailsFragment extends Fragment {
     TextView detailAgentName;
     @BindView(R.id.description_txt)
     TextView detailPropertyDescription;
+    @BindView(R.id.update_btn)
+    MaterialButton updateButton;
 
 
     private GoogleMap mMap;
@@ -198,14 +202,24 @@ public class DetailsFragment extends Fragment {
             configureMap();
 
         });
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent updateIntent = new Intent(getActivity(), UpdatePropertyActivity.class);
+                updateIntent.putExtra("UPDATE_KEY", propertyId);
+                startActivity(updateIntent);
+            }
+        });
+        detailImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photosIntent = new Intent(getActivity(), ShowAllPhotosActivity.class);
+                photosIntent.putExtra("photosKey", propertyId);
+                startActivity(photosIntent);
+            }
+        });
 
 }
-
-
-
-
-
-
 
 
     private void configureMap(){
@@ -293,6 +307,11 @@ public class DetailsFragment extends Fragment {
         if (intent != null){
             if (intent.hasExtra("KEY_DETAIL")){
                 long propertyId = intent.getLongExtra("KEY_DETAIL", 0);
+                Intent updateIntent = new Intent(getActivity(), UpdatePropertyActivity.class);
+                updateIntent.putExtra("UPDATE_KEY", propertyId);
+                startActivity(updateIntent);
+            } else if (intent.hasExtra("MAP_KEY_DETAIL")){
+                long propertyId = intent.getLongExtra("MAP_KEY_DETAIL", 0);
                 Intent updateIntent = new Intent(getActivity(), UpdatePropertyActivity.class);
                 updateIntent.putExtra("UPDATE_KEY", propertyId);
                 startActivity(updateIntent);

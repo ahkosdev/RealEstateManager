@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">RealEstateManager</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="property_type"> Type Of Property </string>
     <string-array name="type_of_property">
         <item> Manor </item>
         <item> Loft </item>
@@ -14,7 +12,8 @@
         <item> Apartment </item>
         <item> House </item>
     </string-array>
-    <string name="property_price"> Price </string>
+    <string name="property_type">Type of property</string>
+    <string name="property_price">Price</string>
     <string name="min_price"> Min Price </string>
     <string name="max_price"> Max Price </string>
     <string name="property_surface"> Surface </string>
@@ -58,10 +57,11 @@
 
     <string name="map"> Map </string>
     <string name="property_ad">Add Property</string>
-    <string name="navigation_drawer_open"> Open drawer navigation</string>
-    <string name="navigation_drawer_close"> Close drawer navigation</string>
+    <string name="navigation_drawer_open" translatable="false"> Open drawer navigation</string>
+    <string name="navigation_drawer_close" translatable="false"> Close drawer navigation</string>
 
     <string name="popup_title_permission_file_access"> Permission is need </string>
+
 
 
 </resources>

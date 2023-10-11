@@ -59,7 +59,7 @@
                 android:id="@+id/property_type_atc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Type of property"
+                android:hint="@string/property_type"
                 android:textStyle="bold"
                 android:textColor="#000000"
                 />

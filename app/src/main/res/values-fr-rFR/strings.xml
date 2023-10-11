@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RealEstateManager</string>
+    <string name="property_type">Type de propriété</string>
+    <string name="property_price">Prix</string>
+    <string name="min_price">Prix minimum</string>
+    <string name="max_price">Prix maximum</string>
+    <string name="property_surface">Surface</string>
+    <string name="min_surface">Surface minimale</string>
+    <string name="max_surface">Surface maximale</string>
+    <string name="rooms_number">Nombre de chambres</string>
+    <string name="property_address">Adresse</string>
+    <string name="property_city">Ville</string>
+    <string name="point_interest">Point d\'intérêt</string>
+    <string name="school">École</string>
+    <string name="high_school">Lycée</string>
+    <string name="university">Université</string>
+    <string name="mall">Centre commercial</string>
+    <string name="hospital">Hôpital</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="park">Parc</string>
+    <string name="museum">Musée</string>
+    <string name="stadium">Stade</string>
+    <string name="night_club">Boîte de nuit</string>
+    <string name="sale_date">Date de mise en vente</string>
+    <string name="date_sale">Date de la vente</string>
+    <string name="sale_agent">Agent immobilier</string>
+    <string name="description">Description de la propriété</string>
+    <string name="available_status">Disponible</string>
+    <string name="sold_status">Vendu</string>
+    <string name="save_button_text">Sauvegarder</string>
+    <string name="add_photo_button_text">Ajouter des photos</string>
+    <string name="no_image_choose_text">Veuillez choisir une photo</string>
+    <string name="search_btn">Recherche</string>
+    <string name="loan_amount">Montant souhaité</string>
+    <string name="hint_period">Période de prêt</string>
+    <string name="hint_interest">Taux d\'intérêt</string>
+    <string name="hint_monthly">Paiement mensuel</string>
+    <string name="hint_interest_total">Intérêt total pour le prêt</string>
+    <string name="hint_total_payment">" Total Payment "</string>
+    <string name="hint_loan_calculator_btn">Simuler mon prêt</string>
+    <string name="error_loan_amount">Veuillez entrer le montant du prêt</string>
+    <string name="error_loan_period">veuillez choisir une période de prêt</string>
+    <string name="map">Carte</string>
+    <string name="property_ad">Ajouter une propriété</string>
+    <string name="popup_title_permission_file_access">L\'autorisation est nécessaire</string>
+</resources>

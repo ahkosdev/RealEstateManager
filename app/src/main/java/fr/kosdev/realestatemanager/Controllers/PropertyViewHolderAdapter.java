@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyView
 
     private List<Property> propertyList;
     private long propertyId;
-    private DetailsFragment detailsFragment;
+    //DetailsFragment detailsFragment;
 
     public PropertyViewHolderAdapter(List<Property> propertyList) {
         this.propertyList = propertyList;
@@ -41,6 +42,11 @@ public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyView
             @Override
             public void onClick(View view) {
                 propertyId = propertyList.get(position).getId();
+                DetailsFragment detailsFragment = (DetailsFragment) ((FragmentActivity) view.getContext()).getSupportFragmentManager()
+                        .findFragmentById(R.id.details_frame_layout);
+                if (detailsFragment != null && detailsFragment.isVisible()){
+                    detailsFragment.tabletPropertyDetails(propertyId);
+                }
                 if (detailsFragment == null || !detailsFragment.isVisible()){
                     Intent intent = new Intent(view.getContext(), DetailsActivity.class);
                     intent.putExtra("KEY_DETAIL", propertyId);

@@ -25,7 +25,6 @@ import fr.kosdev.realestatemanager.Controllers.Fragments.MapsFragment;
 import fr.kosdev.realestatemanager.Controllers.PropertyViewHolderAdapter;
 import fr.kosdev.realestatemanager.Models.Property;
 import fr.kosdev.realestatemanager.R;
-import fr.kosdev.realestatemanager.Utils.ItemClickSupport;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,8 +36,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     Toolbar mToolbar;
     @BindView(R.id.drawer_nav_view)
     NavigationView mNavigationView;
-    @BindView(R.id.property_rcv)
-    RecyclerView propertyRecyclerView;
 
     private HomePageFragment homePageFragment;
     private DetailsFragment detailsFragment;
@@ -58,7 +55,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         this.configureAndShowDetailsFragment();
         this.configureToolbar();
         this.configureDrawerLayout();
-        this.configureOnClickRecyclerView();
 
 
     }
@@ -86,21 +82,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         }
 
     }
-
-    private void configureOnClickRecyclerView(){
-        ItemClickSupport.addTo(propertyRecyclerView, R.layout.property_list_items)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Property property = propertyAdapter.getProperty(position);
-                        long propertyId = property.getId();
-                        if ( detailsFragment != null && detailsFragment.isVisible()){
-                            detailsFragment.tabletPropertyDetails(propertyId);
-                        }
-                    }
-                });
-    }
-
 
 
 

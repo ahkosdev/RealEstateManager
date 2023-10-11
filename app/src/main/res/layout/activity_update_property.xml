@@ -62,7 +62,7 @@
                     android:id="@+id/property_type_atc_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Type of property"
+                    android:hint="@string/property_type"
                     android:textStyle="bold"
                     android:textColor="#000000"
                     />
@@ -151,7 +151,7 @@
                 android:id="@+id/update_property_city_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="City"
+                android:hint="@string/property_city"
                 android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
