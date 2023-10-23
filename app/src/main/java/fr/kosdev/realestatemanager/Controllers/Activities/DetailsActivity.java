@@ -15,10 +15,6 @@ import fr.kosdev.realestatemanager.Controllers.Fragments.DetailsFragment;
 import fr.kosdev.realestatemanager.R;
 
 public class DetailsActivity extends AppCompatActivity {
-
-    //@BindView(R.id.detail_toolbar)
-    //Toolbar detailToolbar;
-
     private DetailsFragment detailsFragment;
 
     @Override
@@ -28,7 +24,6 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.configureAndShowDetailsFragment();
-        //this.configureToolbar();
     }
 
     private void configureAndShowDetailsFragment(){
@@ -43,22 +38,10 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    //private void configureToolbar(){
-        //setSupportActionBar(detailToolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    //}
-
-    //@Override
-    //public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.update_menu, menu);
-       //return true;
-    //}
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.menu.update_menu){
             detailsFragment.startUpdateActivity();
-            //this.startUpdateActivity();
         }else if (item.getItemId() == android.R.id.home){
             finish();
         }

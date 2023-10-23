@@ -95,6 +95,7 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
     UpdateImageAdapter mImageAdapter;
     public boolean isContexualModeEnable = false;
     int counter = 0;
+    private Property property;
 
 
 
@@ -111,7 +112,6 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
         this.configureViewModel();
         this.showProperty();
         this.configureToolbar();
-        //delectedImagesList = new ArrayList<>();
     }
 
     @Override
@@ -133,12 +133,13 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
                         selectedImagesList.add(imageSelectedUris.toString());
                     }
                     mImageAdapter.notifyDataSetChanged();
-                }
+
             }
-            else if (data.getData() != null){
-                imageSelectedUris = data.getData();
-                selectedImagesList.add(imageSelectedUris.toString());
-                mImageAdapter.notifyDataSetChanged();
+            else if (data.getData() != null) {
+                    imageSelectedUris = data.getData();
+                    selectedImagesList.add(imageSelectedUris.toString());
+                    mImageAdapter.notifyDataSetChanged();
+                }
             }
             Toast.makeText(this, getString(R.string.no_image_choose_text), Toast.LENGTH_SHORT).show();
         }
@@ -329,6 +330,11 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
             if (intent.hasExtra("UPDATE_KEY")){
                 long propertyId = intent.getLongExtra("UPDATE_KEY", 0);
                 mPropertyViewModel.getProperty(propertyId).observe(this, property -> {
+                    this.property = property;
+                    Date dateIn = property.getDateOfEntry();
+                    DateFormat df = new SimpleDateFormat("d MMMM yyyy");
+                    String strDateIn = df.format(dateIn);
+
 
                     selectedImagesList.addAll(property.getPhotos());
                     mImageAdapter.notifyDataSetChanged();
@@ -337,10 +343,17 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
                     updateSurfaceOfProperty.setText(Integer.toString(property.getSurfaceOfProperty()));
                     updateNumberOfRooms.setText(Integer.toString(property.getNumberOfRooms()));
                     updatePropertyAddress.setText(property.getAddress());
-                    //updateSaleDate.setText(property.getDateOfEntry());
+                    updatePropertyCity.setText(property.getCity());
+                    updateSaleDate.setText(strDateIn);
                     updatePropertyDescription.setText(property.getPropertyDescription());
                     updateAgentName.setText(property.getRealEstateAgent());
-                    availableStatus.setText(property.getStatus());
+                    if (property.getStatus().equals("Disponible")){
+                        availableStatus.setChecked(true);
+                        soldStatus.setChecked(false);
+                    }else {
+                        availableStatus.setChecked(false);
+                        soldStatus.setChecked(true);
+                    }
 
                 });
             }
@@ -353,10 +366,8 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
             final_userSelection = final_userSelection + selection + ",";
         }
 
-        Date dateIn = new Date();
-        Date dateOut = new Date();
-        //Long dateIn;
-        //Long dateOut;
+        Date dateIn = property.getDateOfEntry();
+        Date dateOut = property.getDateOfSale();
         DateFormat df = new SimpleDateFormat("d MMMM yyyy");
         try {
             dateIn = df.parse(updateSaleDate.getText().toString());
@@ -372,43 +383,46 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
         Intent intent = getIntent();
         if (intent != null){
             if (intent.hasExtra("UPDATE_KEY")){
-                long propertyId = intent.getLongExtra("UPDATE_KEY", 0);
+               // long propertyId = intent.getLongExtra("UPDATE_KEY", 0);
 
-                Property updateProperty = new Property(
+               // Property updateProperty = new Property(
                         //propertyId,
-                        selectedImagesList,
-                        updatePropertyTypesAutocomplete.getText().toString(),
-                        Integer.parseInt(updatePriceOfProperty.getText().toString()),
-                        Integer.parseInt(updateNumberOfRooms.getText().toString()),
-                        Integer.parseInt(updateSurfaceOfProperty.getText().toString()),
-                        updatePropertyDescription.getText().toString(),
-                        updatePropertyAddress.getText().toString(),
-                        updatePropertyCity.getText().toString(),
-                        final_userSelection,
-                        soldStatus.getText().toString(),
-                        dateIn,
-                        dateOut,
-                        //updateSaleDate.getText().toString(),
-                        //updateDateOfSale.getText().toString(),
-                        updateAgentName.getText().toString()
-                );
-                mPropertyViewModel.updateProperty(updateProperty);
+                        //selectedImagesList,
+                        //updatePropertyTypesAutocomplete.getText().toString(),
+                       //Integer.parseInt(updatePriceOfProperty.getText().toString()),
+                       // Integer.parseInt(updateNumberOfRooms.getText().toString()),
+                        //Integer.parseInt(updateSurfaceOfProperty.getText().toString()),
+                        //updatePropertyDescription.getText().toString(),
+                       //updatePropertyAddress.getText().toString(),
+                        //updatePropertyCity.getText().toString(),
+                        //final_userSelection,
+                        //soldStatus.getText().toString(),
+                        //dateIn,
+                        //dateOut,
+                        //updateAgentName.getText().toString()
+               // );
+                property.setPhotos(selectedImagesList);
+                property.setType(updatePropertyTypesAutocomplete.getText().toString());
+                property.setPrice(Integer.parseInt(updatePriceOfProperty.getText().toString()));
+                property.setNumberOfRooms(Integer.parseInt(updateNumberOfRooms.getText().toString()));
+                property.setSurfaceOfProperty(Integer.parseInt(updateSurfaceOfProperty.getText().toString()));
+                property.setAddress(updatePropertyAddress.getText().toString());
+                property.setCity(updatePropertyCity.getText().toString());
+                property.setPointsOfInterest(final_userSelection);
+                property.setStatus(soldStatus.getText().toString());
+                property.setDateOfEntry(dateIn);
+                property.setDateOfSale(dateOut);
+                property.setRealEstateAgent(updateAgentName.getText().toString());
+                mPropertyViewModel.updateProperty(property);
                 finish();
             }
         }
 
     }
 
-    //@Override
-    //public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.update_menu, menu);
-        //return true;
-    //}
-
     @Override
     public boolean onLongClick(View view) {
         isContexualModeEnable = true;
-        //updateToolbar.getMenu().clear();
         updateToolbar.inflateMenu(R.menu.delete_image_menu);
         getSupportActionBar().setTitle("0 Image Selected");
         updateToolbar.setBackgroundColor(getColor(R.color.colorAccent));
@@ -450,7 +464,6 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
         isContexualModeEnable = false;
         imageSelectedCounter.setText("Update Property");
         updateToolbar.getMenu().clear();
-        //updateToolbar.inflateMenu(R.menu.update_menu);
         counter = 0;
         deletedImagesList.clear();
         mImageAdapter.notifyDataSetChanged();

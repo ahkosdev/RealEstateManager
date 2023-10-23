@@ -65,8 +65,5 @@ public class ShowAllPhotosActivity extends AppCompatActivity {
             }
 
         }
-        //Property property = (Property) intent.getSerializableExtra("photosKey");
-        //photosUris.addAll(property.getPhotos());
-        //mDetailPhotoAdapter.notifyDataSetChanged();
     }
 }

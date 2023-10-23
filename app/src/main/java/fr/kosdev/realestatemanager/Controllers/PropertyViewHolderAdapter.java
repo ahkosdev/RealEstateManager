@@ -21,7 +21,6 @@ public class PropertyViewHolderAdapter extends RecyclerView.Adapter<PropertyView
 
     private List<Property> propertyList;
     private long propertyId;
-    //DetailsFragment detailsFragment;
 
     public PropertyViewHolderAdapter(List<Property> propertyList) {
         this.propertyList = propertyList;

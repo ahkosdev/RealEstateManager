@@ -106,11 +106,13 @@ public class DetailsFragment extends Fragment {
                         Intent photosIntent = new Intent(getActivity(), ShowAllPhotosActivity.class);
                         photosIntent.putExtra("photosKey", propertyId);
                         startActivity(photosIntent);
+                    }else if (intent.hasExtra("MAP_KEY_DETAIL")) {
+                        long propertyId = intent.getLongExtra( "MAP_KEY_DETAIL",0);
+                        Intent photosIntent = new Intent(getActivity(), ShowAllPhotosActivity.class);
+                        photosIntent.putExtra("photoskey", propertyId);
+                        startActivity(photosIntent);
                     }
                 }
-                //Intent photosIntent = new Intent(getActivity(), ShowAllPhotosActivity.class);
-                //intent.putExtra("photosKey", propertyId);
-                //startActivity(photosIntent);
 
             }
         });
@@ -203,19 +205,11 @@ public class DetailsFragment extends Fragment {
 
         });
         updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+           @Override
             public void onClick(View view) {
                 Intent updateIntent = new Intent(getActivity(), UpdatePropertyActivity.class);
                 updateIntent.putExtra("UPDATE_KEY", propertyId);
                 startActivity(updateIntent);
-            }
-        });
-        detailImages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent photosIntent = new Intent(getActivity(), ShowAllPhotosActivity.class);
-                photosIntent.putExtra("photosKey", propertyId);
-                startActivity(photosIntent);
             }
         });
 
@@ -246,11 +240,6 @@ public class DetailsFragment extends Fragment {
         }
     }
 
-    //private void updateAddress(List<String> allAddress){
-        //addressList.clear();
-        //addressList.addAll(allAddress);
-
-
     @SuppressLint("MissingPermission")
     private void getCurrentLocation(){
 
@@ -264,11 +253,6 @@ public class DetailsFragment extends Fragment {
                         @Override
                         public void onMapReady(@NonNull GoogleMap googleMap) {
                             mMap = googleMap;
-                            //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            //mMap.addMarker(new MarkerOptions().position(latLng).title("my position"));
-                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                            //mMap.setMyLocationEnabled(true);
 
                             propertyDetailViewModel.getAddressGeocode(mProperty.getAddress()).observe(getViewLifecycleOwner(), realStateGeocode -> {
 
@@ -284,10 +268,6 @@ public class DetailsFragment extends Fragment {
                                         mMap.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(geocodeLatLng));
                                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(geocodeLatLng, 16));
-
-
-
-
 
                                 }catch (Exception e){
                                     e.printStackTrace();

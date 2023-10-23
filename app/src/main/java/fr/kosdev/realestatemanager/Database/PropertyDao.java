@@ -34,7 +34,7 @@ public interface PropertyDao {
     Cursor getPropertyWithCursor(long propertyId);
 
     @Update
-    int updateProperty(Property property);
+    void updateProperty(Property property);
 
     @Query("SELECT * FROM Property WHERE price >= :minPrice OR price <= :maxPrice")
     LiveData<List<Property>> getPropertiesWithMinAndMaxPrice(String minPrice, String maxPrice);

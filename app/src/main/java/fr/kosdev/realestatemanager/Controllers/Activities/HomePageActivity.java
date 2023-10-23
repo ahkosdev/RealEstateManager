@@ -28,8 +28,6 @@ import fr.kosdev.realestatemanager.R;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    //@BindView(R.id.property_rcv)
-    //RecyclerView propertyRecyclerView;
     @BindView(R.id.drawer_lyt)
     DrawerLayout mDrawerLayout;
     @BindView(R.id.homepage_toolbar)
@@ -96,7 +94,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
         switch (id){
             case R.id.drawer_map_menu:
-                //this.showFragment(MAP_FRAGMENT);
                 this.startMapActivity();
                 break;
 

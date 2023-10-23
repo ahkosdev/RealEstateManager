@@ -26,7 +26,6 @@ public class Property implements Serializable {
     private int numberOfRooms;
     private int surfaceOfProperty;
     private String propertyDescription;
-    //private String photo;
      ArrayList<String> photos;
     private String address;
     private String city;
@@ -37,14 +36,10 @@ public class Property implements Serializable {
     @TypeConverters(DateConverter.class)
     private Date dateOfSale;
     private String realEstateAgent;
-    //@TypeConverters(DateConverter.class)
-    //private Long dateOfEntry;
-    //private Long dateOfSale;
 
     public Property(){}
 
     public Property( ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String city, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
-        //this.id = id;
         this.type = type;
         this.price = price;
         this.numberOfRooms = numberOfRooms;
@@ -108,14 +103,6 @@ public class Property implements Serializable {
     public void setPropertyDescription(String propertyDescription) {
         this.propertyDescription = propertyDescription;
     }
-
-    //public String getPhoto() {
-        //return photo;
-    //}
-
-    //public void setPhotos(String photo) {
-        //this.photo = photo;
-    //}
 
 
     public ArrayList<String> getPhotos() {

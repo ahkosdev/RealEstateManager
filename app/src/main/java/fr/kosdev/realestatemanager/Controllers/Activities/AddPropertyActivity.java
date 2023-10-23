@@ -118,7 +118,6 @@ public class AddPropertyActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //imagesUriList = new ArrayList<>();
         if (requestCode == RC_CHOOSE_PHOTO){
             if (resultCode == RESULT_OK){
                 if (data.getClipData() != null){
@@ -127,28 +126,20 @@ public class AddPropertyActivity extends AppCompatActivity {
                         this.uriImageSelected = data.getClipData().getItemAt(i).getUri();
                         imagesUriList.add(uriImageSelected.toString());
                     }
-                    //imageAdapter = new PropertyImageAdapter(imagesUriList);
                     imageAdapter.notifyDataSetChanged();
-                    //Glide.with(this)
-                            //.load(imagesUriList.get(0))
-                           // .apply(RequestOptions.circleCropTransform())
-                           // .into(propertyImages);
 
+            }else if (data.getData() != null) {
+                    this.uriImageSelected = data.getData();
+                    imagesUriList.add(uriImageSelected.toString());
+                    imageAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(this, getString(R.string.no_image_choose_text), Toast.LENGTH_SHORT).show();
                 }
 
-            }else if (data.getData() != null){
-                this.uriImageSelected = data.getData();
-                imagesUriList.add(uriImageSelected.toString());
-                //imageAdapter = new PropertyImageAdapter(imagesUriList);
-                imageAdapter.notifyDataSetChanged();
-                //Glide.with(this)
-                        //.load(imagesUriList.get(0))
-                        //.apply(RequestOptions.circleCropTransform())
-                        //.into(propertyImages);
             }
-            Toast.makeText(this, getString(R.string.no_image_choose_text), Toast.LENGTH_SHORT).show();
+
         }
-        //this.handleResponse(requestCode, resultCode, data);
+
     }
 
     @OnClick(R.id.add_photo_btn)
@@ -162,12 +153,10 @@ public class AddPropertyActivity extends AppCompatActivity {
             EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_file_access),RC_IMAGE_PERMS, PERMS);
             return;
         }
-        //Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         startActivityForResult(Intent.createChooser(intent, "SELECT PHOTOS"),RC_CHOOSE_PHOTO);
-        //startActivityForResult(intent, RC_CHOOSE_PHOTO);
     }
 
     private void handleResponse(int requestCode, int resultCode, Intent data){
@@ -344,8 +333,6 @@ public class AddPropertyActivity extends AppCompatActivity {
                 }
                 Date date = new Date();
                 Date dateOut = new Date();
-                //Long date;
-                //Long dateOut;
                 DateFormat df = new SimpleDateFormat("d MMMM yyyy");
                 try {
                     date = df.parse(saleDate.getText().toString());
@@ -358,61 +345,62 @@ public class AddPropertyActivity extends AppCompatActivity {
                 }catch (ParseException e){
                     e.printStackTrace();
                 }
-
                 long id = (long) (Math.random()*50000);
-                Property property = new Property(
-                       // id,
-                        //uriImageSelected.toString(),
-                        imagesUriList,
-                        propertyTypesAutocomplete.getText().toString(),
-                        Integer.parseInt(priceOfProperty.getText().toString()),
-                        Integer.parseInt(numberOfRooms.getText().toString()),
-                        Integer.parseInt(surfaceOfProperty.getText().toString()),
-                        propertyDescription.getText().toString(),
-                        propertyAddress.getText().toString(),
-                        propertyCity.getText().toString(),
-                        final_userSelection,
-                        //selections.toString(),
-                        availableStatus.getText().toString(),
-                        date,
-                        dateOut,
-                        //saleDate.getText().toString(),
-                        //dateOfSale.getText().toString(),
-                        agentName.getText().toString()
-
-
-
-                );
-                propertyViewModel.createProperty(property);
-
-                Uri uri = Uri.parse(property.getPhotos().get(0));
-                //Bitmap bitmap = MediaStore.Images.Media.getBitmap(view.getContext().getContentResolver(), Uri.parse(property.getPhotos().get(0)));
-
-                Intent intent = new Intent(view.getContext(), DetailsActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(view.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-                String channelId = "default_channel";
-                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(view.getContext(), channelId)
-                        .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                        .setContentTitle(property.getAddress())
-                        .setContentText("New Property is added Successfully")
-                        .setLargeIcon(BitmapFactory.decodeFile("property.getPhotos()"))
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true);
-                NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-
-                    CharSequence channelName = "Success Notifications";
-                    int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                    NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
-                    notificationManager.createNotificationChannel(channel);
+                //Integer price = null;
+                if (priceOfProperty.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please inter a price",Toast.LENGTH_SHORT).show();
+                } else if (numberOfRooms.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please enter the number of rooms", Toast.LENGTH_SHORT).show();
+                }else if (surfaceOfProperty.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Please enter surface of property", Toast.LENGTH_SHORT).show();
                 }
-                notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
+                else {
+                    //price = Integer.parseInt(priceOfProperty.getText().toString());
+                    Property property = new Property(
+                            imagesUriList,
+                            propertyTypesAutocomplete.getText().toString(),
+                            //price,
+                            Integer.parseInt(priceOfProperty.getText().toString()),
+                            Integer.parseInt(numberOfRooms.getText().toString()),
+                            Integer.parseInt(surfaceOfProperty.getText().toString()),
+                            propertyDescription.getText().toString(),
+                            propertyAddress.getText().toString(),
+                            propertyCity.getText().toString(),
+                            final_userSelection,
+                            availableStatus.getText().toString(),
+                            date,
+                            dateOut,
+                            agentName.getText().toString()
 
+                    );
+                    propertyViewModel.createProperty(property);
+                    Uri uri = Uri.parse(property.getPhotos().get(0));
 
-                //sendVisualNotification();
-                finish();
+                    Intent intent = new Intent(view.getContext(), DetailsActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(view.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+                    String channelId = "default_channel";
+                    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(view.getContext(), channelId)
+                            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                            .setContentTitle(property.getAddress())
+                            .setContentText("New Property is added Successfully")
+                            .setLargeIcon(BitmapFactory.decodeFile("property.getPhotos()"))
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true);
+                    NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+
+                        CharSequence channelName = "Success Notifications";
+                        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+                        notificationManager.createNotificationChannel(channel);
+                    }
+                    notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
+
+                    finish();
+                }
+
             }
         });
     }
