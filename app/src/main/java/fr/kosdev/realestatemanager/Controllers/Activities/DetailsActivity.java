@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,6 +16,11 @@ import fr.kosdev.realestatemanager.Controllers.Fragments.DetailsFragment;
 import fr.kosdev.realestatemanager.R;
 
 public class DetailsActivity extends AppCompatActivity {
+
+    @BindView(R.id.detail_toolbar)
+    Toolbar detailToolbar;
+
+
     private DetailsFragment detailsFragment;
 
     @Override
@@ -24,6 +30,7 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         this.configureAndShowDetailsFragment();
+        this.configureDetailToolbar();
     }
 
     private void configureAndShowDetailsFragment(){
@@ -45,11 +52,23 @@ public class DetailsActivity extends AppCompatActivity {
         }else if (item.getItemId() == android.R.id.home){
             finish();
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void startUpdateActivity(){
         Intent intent = new Intent(this, UpdatePropertyActivity.class);
         startActivity(intent);
+    }
+
+    private void configureDetailToolbar(){
+        setSupportActionBar(detailToolbar);
+        getSupportActionBar().setTitle("Property Detail ");
+        //getSupportActionBar().setIcon(R.drawable.ic_baseline_update_24);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.update_menu, menu);
+        return true;
     }
 }

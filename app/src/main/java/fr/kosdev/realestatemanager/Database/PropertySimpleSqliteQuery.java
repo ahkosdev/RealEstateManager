@@ -25,7 +25,7 @@ public class PropertySimpleSqliteQuery{
 
 
     public SimpleSQLiteQuery simpleSqliteQuery(String minPrice, String maxPrice,String numberOfRooms, String minSurface, String maxSurface, String searchType,
-                                               String searchAddress, String searchDate){
+                                               String searchDate){
         conditions = new ArrayList<>();
         select = "";
 
@@ -86,16 +86,6 @@ public class PropertySimpleSqliteQuery{
             }
             select += " type == ?";
             conditions.add(searchType);
-        }
-        if (!searchAddress.isEmpty()){
-            if (containsCondition){
-                select += " AND";
-            }else {
-                select += " WHERE";
-                containsCondition = true;
-            }
-            select += " address LIKE '%"+ searchAddress + "%'";
-            //conditions.add(searchAddress);
         }
 
 

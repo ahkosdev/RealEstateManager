@@ -11,7 +11,7 @@
             android:title="@string/property_ad"/>
         <item
             android:id="@+id/loan_menu"
-            android:title="Ask For Loan"/>
+            android:title="@string/Loan_Simulator"/>
     </group>
 
 </menu>

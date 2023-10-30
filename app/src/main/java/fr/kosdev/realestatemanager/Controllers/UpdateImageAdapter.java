@@ -97,8 +97,8 @@ public class UpdateImageAdapter extends RecyclerView.Adapter<UpdateImageAdapter.
 
 
 
-        //@OnClick(R.id.delete_image_fab)
-        //public void deleteImage(String selectedImage){
+       // @OnClick(R.id.delete_image_fab)
+       // public void deleteImage(String selectedImage){
             //imagesUri.remove(selectedImage);
         //}
     }

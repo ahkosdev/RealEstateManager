@@ -44,4 +44,20 @@
     <string name="map">Carte</string>
     <string name="property_ad">Ajouter une propriété</string>
     <string name="popup_title_permission_file_access">L\'autorisation est nécessaire</string>
+    <string name="Loan_Simulator"> Simulateur de prêt </string>
+    <string name="hint_price"> Prix : </string>
+    <string name="hint_publish"> Publier le : </string>
+    <string name="hint_next"> A proximité de : </string>
+    <string name="hint_by"> Mise en vente par : </string>
+    <string-array name="type_of_property">
+        <item> Manoir </item>
+        <item> Studio </item>
+        <item> Penthouse </item>
+        <item> Château </item>
+        <item> Villa </item>
+        <item> Duplex </item>
+        <item> Immeuble </item>
+        <item> Appartement </item>
+        <item> Maison </item>
+    </string-array>
 </resources>

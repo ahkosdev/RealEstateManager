@@ -38,6 +38,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DateFormat;
@@ -68,7 +69,6 @@ public class AddPropertyActivity extends AppCompatActivity {
     @BindView(R.id.property_area_txt)TextInputEditText surfaceOfProperty;
     @BindView(R.id.rooms_number_txt) TextInputEditText numberOfRooms;
     @BindView(R.id.property_address_txt) TextInputEditText propertyAddress;
-    @BindView(R.id.property_city_txt) TextInputEditText propertyCity;
     @BindView(R.id.sale_date_picker) TextInputEditText saleDate;
     @BindView(R.id.sold_date_picker) TextInputEditText dateOfSale;
     @BindView(R.id.available_chip)
@@ -80,6 +80,8 @@ public class AddPropertyActivity extends AppCompatActivity {
     MaterialButton saveButton;
     @BindView(R.id.property_photo_rcv)
     RecyclerView propertyImagesRcv;
+    @BindView(R.id.add_photo_fab)
+    FloatingActionButton addPhotoFab;
 
     ArrayAdapter<String> propertyTypeAdapter;
     ArrayList<String> selections = new ArrayList<>();
@@ -142,7 +144,7 @@ public class AddPropertyActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.add_photo_btn)
+    @OnClick(R.id.add_photo_fab)
     @AfterPermissionGranted(RC_IMAGE_PERMS)
     public void addImages(){
         this.chooseImageFromPhone();
@@ -346,26 +348,24 @@ public class AddPropertyActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 long id = (long) (Math.random()*50000);
-                //Integer price = null;
                 if (priceOfProperty.getText().toString().trim().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Please inter a price",Toast.LENGTH_SHORT).show();
                 } else if (numberOfRooms.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Please enter the number of rooms", Toast.LENGTH_SHORT).show();
                 }else if (surfaceOfProperty.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), "Please enter surface of property", Toast.LENGTH_SHORT).show();
+                }else if (imagesUriList.size() == 0){
+                    Toast.makeText(getApplicationContext(), "Please add a photo", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //price = Integer.parseInt(priceOfProperty.getText().toString());
                     Property property = new Property(
                             imagesUriList,
                             propertyTypesAutocomplete.getText().toString(),
-                            //price,
                             Integer.parseInt(priceOfProperty.getText().toString()),
                             Integer.parseInt(numberOfRooms.getText().toString()),
                             Integer.parseInt(surfaceOfProperty.getText().toString()),
                             propertyDescription.getText().toString(),
                             propertyAddress.getText().toString(),
-                            propertyCity.getText().toString(),
                             final_userSelection,
                             availableStatus.getText().toString(),
                             date,
@@ -374,7 +374,6 @@ public class AddPropertyActivity extends AppCompatActivity {
 
                     );
                     propertyViewModel.createProperty(property);
-                    Uri uri = Uri.parse(property.getPhotos().get(0));
 
                     Intent intent = new Intent(view.getContext(), DetailsActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(view.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);

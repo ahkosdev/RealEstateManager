@@ -60,8 +60,6 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
     TextInputEditText updateNumberOfRooms;
     @BindView(R.id.property_address_txt_up)
     TextInputEditText updatePropertyAddress;
-    @BindView(R.id.update_property_city_txt)
-    TextInputEditText updatePropertyCity;
     @BindView(R.id.sale_date_picker_up)
     TextInputEditText updateSaleDate;
     @BindView(R.id.sold_date_picker_up)
@@ -335,25 +333,28 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
                     DateFormat df = new SimpleDateFormat("d MMMM yyyy");
                     String strDateIn = df.format(dateIn);
 
+                        selectedImagesList.addAll(property.getPhotos());
+                        mImageAdapter.notifyDataSetChanged();
+                        updatePropertyTypesAutocomplete.setText(property.getType());
+                        updatePriceOfProperty.setText(Integer.toString(property.getPrice()));
+                        updateSurfaceOfProperty.setText(Integer.toString(property.getSurfaceOfProperty()));
+                        updateNumberOfRooms.setText(Integer.toString(property.getNumberOfRooms()));
+                        updatePropertyAddress.setText(property.getAddress());
+                        updateSaleDate.setText(strDateIn);
+                        updatePropertyDescription.setText(property.getPropertyDescription());
+                        updateAgentName.setText(property.getRealEstateAgent());
+                        if (property.getStatus().equals("Disponible")){
+                            availableStatus.setChecked(true);
+                            soldStatus.setChecked(false);
+                        }else {
+                            availableStatus.setChecked(false);
+                            soldStatus.setChecked(true);
+                        }
 
-                    selectedImagesList.addAll(property.getPhotos());
-                    mImageAdapter.notifyDataSetChanged();
-                    updatePropertyTypesAutocomplete.setText(property.getType());
-                    updatePriceOfProperty.setText(Integer.toString(property.getPrice()));
-                    updateSurfaceOfProperty.setText(Integer.toString(property.getSurfaceOfProperty()));
-                    updateNumberOfRooms.setText(Integer.toString(property.getNumberOfRooms()));
-                    updatePropertyAddress.setText(property.getAddress());
-                    updatePropertyCity.setText(property.getCity());
-                    updateSaleDate.setText(strDateIn);
-                    updatePropertyDescription.setText(property.getPropertyDescription());
-                    updateAgentName.setText(property.getRealEstateAgent());
-                    if (property.getStatus().equals("Disponible")){
-                        availableStatus.setChecked(true);
-                        soldStatus.setChecked(false);
-                    }else {
-                        availableStatus.setChecked(false);
-                        soldStatus.setChecked(true);
-                    }
+
+
+
+
 
                 });
             }
@@ -383,38 +384,30 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
         Intent intent = getIntent();
         if (intent != null){
             if (intent.hasExtra("UPDATE_KEY")){
-               // long propertyId = intent.getLongExtra("UPDATE_KEY", 0);
+                if (updatePriceOfProperty.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please inter a price",Toast.LENGTH_SHORT).show();
+                } else if (updateNumberOfRooms.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please enter the number of rooms", Toast.LENGTH_SHORT).show();
+                }else if (updateSurfaceOfProperty.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Please enter surface of property", Toast.LENGTH_SHORT).show();
+                }else if (selectedImagesList.size() == 0){
+                    Toast.makeText(getApplicationContext(), "Please add a photo", Toast.LENGTH_SHORT).show();
+                }else {
+                    property.setPhotos(selectedImagesList);
+                    property.setType(updatePropertyTypesAutocomplete.getText().toString());
+                    property.setPrice(Integer.parseInt(updatePriceOfProperty.getText().toString()));
+                    property.setNumberOfRooms(Integer.parseInt(updateNumberOfRooms.getText().toString()));
+                    property.setSurfaceOfProperty(Integer.parseInt(updateSurfaceOfProperty.getText().toString()));
+                    property.setAddress(updatePropertyAddress.getText().toString());
+                    property.setPointsOfInterest(final_userSelection);
+                    property.setStatus(soldStatus.getText().toString());
+                    property.setDateOfEntry(dateIn);
+                    property.setDateOfSale(dateOut);
+                    property.setRealEstateAgent(updateAgentName.getText().toString());
+                    mPropertyViewModel.updateProperty(property);
+                    finish();
+                }
 
-               // Property updateProperty = new Property(
-                        //propertyId,
-                        //selectedImagesList,
-                        //updatePropertyTypesAutocomplete.getText().toString(),
-                       //Integer.parseInt(updatePriceOfProperty.getText().toString()),
-                       // Integer.parseInt(updateNumberOfRooms.getText().toString()),
-                        //Integer.parseInt(updateSurfaceOfProperty.getText().toString()),
-                        //updatePropertyDescription.getText().toString(),
-                       //updatePropertyAddress.getText().toString(),
-                        //updatePropertyCity.getText().toString(),
-                        //final_userSelection,
-                        //soldStatus.getText().toString(),
-                        //dateIn,
-                        //dateOut,
-                        //updateAgentName.getText().toString()
-               // );
-                property.setPhotos(selectedImagesList);
-                property.setType(updatePropertyTypesAutocomplete.getText().toString());
-                property.setPrice(Integer.parseInt(updatePriceOfProperty.getText().toString()));
-                property.setNumberOfRooms(Integer.parseInt(updateNumberOfRooms.getText().toString()));
-                property.setSurfaceOfProperty(Integer.parseInt(updateSurfaceOfProperty.getText().toString()));
-                property.setAddress(updatePropertyAddress.getText().toString());
-                property.setCity(updatePropertyCity.getText().toString());
-                property.setPointsOfInterest(final_userSelection);
-                property.setStatus(soldStatus.getText().toString());
-                property.setDateOfEntry(dateIn);
-                property.setDateOfSale(dateOut);
-                property.setRealEstateAgent(updateAgentName.getText().toString());
-                mPropertyViewModel.updateProperty(property);
-                finish();
             }
         }
 

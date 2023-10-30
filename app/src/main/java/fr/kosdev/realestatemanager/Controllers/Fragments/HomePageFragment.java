@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -71,8 +72,10 @@ public class HomePageFragment extends Fragment {
     TextInputEditText searchAddress;
     @BindView(R.id.search_date_txt)
     TextInputEditText searchDate;
-    //@BindView(R.id.add_fab)
-    //FloatingActionButton addFab;
+   @BindView(R.id.search_layout)
+    LinearLayout searchLayout;
+   @BindView(R.id.add_fab)
+   FloatingActionButton addFab;
 
     private PropertyViewHolderAdapter mPropertyViewHolderAdapter;
     private List<Property> mPropertyList;
@@ -88,7 +91,6 @@ public class HomePageFragment extends Fragment {
 
 
     public HomePageFragment() {
-        // Required empty public constructor
     }
 
 
@@ -96,18 +98,10 @@ public class HomePageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         ButterKnife.bind(this,view);
 
-        //addFab.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View view) {
-                //Intent intent = new Intent(getContext(), AddPropertyActivity.class);
-                //startActivity(intent);
-
-            //}
-        //});
 
         this.configureRecyclerView();
         this.configureViewModel();
@@ -180,7 +174,7 @@ public class HomePageFragment extends Fragment {
         mSqliteQuery = new PropertySimpleSqliteQuery();
         mQuery = mSqliteQuery.simpleSqliteQuery(searchMinPrice.getText().toString(), searchMaxPrice.getText().toString(),
                 roomsNumber.getText().toString(), minSurface.getText().toString(), maxSurface.getText().toString(), searchType.getText().toString(),
-                searchAddress.getText().toString(), searchDate.getText().toString());
+                searchDate.getText().toString());
         mPropertyViewModel.getPropertiesWithFilter(mQuery).observe(getViewLifecycleOwner(), this::updateWithPriceSearch);
 
     }
@@ -192,8 +186,28 @@ public class HomePageFragment extends Fragment {
     }
 
     @OnClick(R.id.search_btn)
-    public void searchPropertiesWithPrice(){
+    public void searchPropertiesWithPrice() {
         this.getPropertiesWithPrice();
+        if (searchLayout.getVisibility() == View.VISIBLE) {
+            searchLayout.setVisibility(View.GONE);
+        }
     }
+
+    @OnClick(R.id.search_address_txt)
+    public void showFilter() {
+            if (searchLayout.getVisibility() == View.GONE) {
+                searchLayout.setVisibility(View.VISIBLE);
+            }else {
+                searchLayout.setVisibility(View.GONE);
+            }
+        }
+
+    @OnClick(R.id.add_fab)
+    public void startAddActivity(){
+        Intent intent = new Intent(getActivity(), AddPropertyActivity.class);
+        startActivity(intent);
+    }
+
+
 
 }

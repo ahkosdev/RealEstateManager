@@ -5,7 +5,7 @@
         <item> Manor </item>
         <item> Loft </item>
         <item> Penthouse </item>
-        <item> Chateau </item>
+        <item> Castle </item>
         <item> Villa </item>
         <item> Duplex </item>
         <item> Building </item>
@@ -43,8 +43,14 @@
     <string name="add_photo_button_text"> Add Photos </string>
     <string name="no_image_choose_text"> Please choose a photo </string>
     <string name="search_btn"> Search </string>
+    <string name="hint_price"> Price : </string>
+    <string name="hint_publish"> Publish the : </string>
+    <string name="hint_next"> Next to : </string>
+    <string name="hint_by"> Sold by :</string>
 
-    //Loan Simulator
+
+    // Simulator
+    <string name="Loan_Simulator"> Loan Simulator </string>
     <string name="loan_amount"> Desired Amount </string>
     <string name="hint_period"> Loan Period </string>
     <string name="hint_interest"> Interest Rate </string>

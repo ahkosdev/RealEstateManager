@@ -28,7 +28,6 @@ public class Property implements Serializable {
     private String propertyDescription;
      ArrayList<String> photos;
     private String address;
-    private String city;
     private String pointsOfInterest;
     private String status;
     @TypeConverters(DateConverter.class)
@@ -39,7 +38,7 @@ public class Property implements Serializable {
 
     public Property(){}
 
-    public Property( ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String city, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
+    public Property( ArrayList<String> photos, String type, int price, int numberOfRooms, int surfaceOfProperty, String propertyDescription, String address, String pointsOfInterest, String status, Date dateOfEntry, Date dateOfSale, String realEstateAgent) {
         this.type = type;
         this.price = price;
         this.numberOfRooms = numberOfRooms;
@@ -47,7 +46,6 @@ public class Property implements Serializable {
         this.propertyDescription = propertyDescription;
         this.photos = photos;
         this.address = address;
-        this.city = city;
         this.pointsOfInterest = pointsOfInterest;
         this.status = status;
         this.dateOfEntry = dateOfEntry;
@@ -121,14 +119,6 @@ public class Property implements Serializable {
         this.address = address;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getPointsOfInterest() {
         return pointsOfInterest;
     }
@@ -179,7 +169,6 @@ public class Property implements Serializable {
         if (values.containsKey("surfaceOfProperty")) contentProperty.setSurfaceOfProperty(values.getAsInteger("surfaceOfProperty"));
         if (values.containsKey("propertyDescription")) contentProperty.setPropertyDescription(values.getAsString("propertyDescription"));
         if (values.containsKey("address")) contentProperty.setAddress(values.getAsString("address"));
-        if (values.containsKey("city")) contentProperty.setCity(values.getAsString("city"));
         if (values.containsKey("pointsOfInterest")) contentProperty.setPointsOfInterest(values.getAsString("pointsOfInterest"));
         if (values.containsKey("status")) contentProperty.setStatus(values.getAsString("status"));
         if (values.containsKey("dateOfEntry")) contentProperty.setDateOfEntry(DateConverter.toDate(values.getAsLong("dateOfEntry")));

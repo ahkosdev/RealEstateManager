@@ -142,12 +142,12 @@ public class DetailsFragment extends Fragment {
                     }
 
                     propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
-                    propertyDetailPrice.setText("Price : " + Integer.toString(property.getPrice()) + "$");
+                    propertyDetailPrice.setText( getString(R.string.hint_price) + " " + Integer.toString(property.getPrice()) + "€");
                     propertyShortDescription.setText(property.getAddress());
-                    detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
-                    detailAgentName.setText("By : " + property.getRealEstateAgent());
+                    detailSaleDate.setText(getString(R.string.hint_publish) + " " + sdf.format(property.getDateOfEntry()));
+                    detailAgentName.setText(getString(R.string.hint_by) + " " + property.getRealEstateAgent());
                     detailPropertyDescription.setText(property.getPropertyDescription());
-                    proximityPointOfInterest.setText("Next to : " + property.getPointsOfInterest());
+                    proximityPointOfInterest.setText(getString(R.string.hint_next) + " " + property.getPointsOfInterest());
 
                     mProperty = property;
                     configureMap();
@@ -163,12 +163,12 @@ public class DetailsFragment extends Fragment {
                         Glide.with(this).load(photoUris.get(0)).into(detailImages);
                     }
                     propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
-                    propertyDetailPrice.setText("Price : " + Integer.toString(property.getPrice()) + "$");
+                    propertyDetailPrice.setText(getString(R.string.hint_price) + " " + Integer.toString(property.getPrice()) + "€");
                     propertyShortDescription.setText(property.getAddress());
-                    detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
-                    detailAgentName.setText("By : " + property.getRealEstateAgent());
+                    detailSaleDate.setText(getString(R.string.hint_publish) + " " + sdf.format(property.getDateOfEntry()));
+                    detailAgentName.setText(getString(R.string.hint_by) + " " + property.getRealEstateAgent());
                     detailPropertyDescription.setText(property.getPropertyDescription());
-                    proximityPointOfInterest.setText("Next to : " + property.getPointsOfInterest());
+                    proximityPointOfInterest.setText(getString(R.string.hint_next) + " " + property.getPointsOfInterest());
 
                     mProperty = property;
                     configureMap();
@@ -193,12 +193,12 @@ public class DetailsFragment extends Fragment {
             }
 
             propertyDetailType.setText(property.getType() + "," + property.getSurfaceOfProperty() + "m²");
-            propertyDetailPrice.setText("Price : " + Integer.toString(property.getPrice()) + "$");
+            propertyDetailPrice.setText( getString(R.string.hint_price) + " " + Integer.toString(property.getPrice()) + "€");
             propertyShortDescription.setText(property.getAddress());
-            detailSaleDate.setText("Publish the : " + sdf.format(property.getDateOfEntry()));
-            detailAgentName.setText("By : " + property.getRealEstateAgent());
+            detailSaleDate.setText(getString(R.string.hint_publish) + " " + sdf.format(property.getDateOfEntry()));
+            detailAgentName.setText(getString(R.string.hint_by) + property.getRealEstateAgent());
             detailPropertyDescription.setText(property.getPropertyDescription());
-            proximityPointOfInterest.setText("Next to : " + property.getPointsOfInterest());
+            proximityPointOfInterest.setText(getString(R.string.hint_next) + " " + property.getPointsOfInterest());
 
             mProperty = property;
             configureMap();
