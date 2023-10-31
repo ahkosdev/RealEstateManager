@@ -62,8 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void configureDetailToolbar(){
         setSupportActionBar(detailToolbar);
-        getSupportActionBar().setTitle("Property Detail ");
-        //getSupportActionBar().setIcon(R.drawable.ic_baseline_update_24);
+        getSupportActionBar().setTitle(getString(R.string.hint_detail));
     }
 
     @Override

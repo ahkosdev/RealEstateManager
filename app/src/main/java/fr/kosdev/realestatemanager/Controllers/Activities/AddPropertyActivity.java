@@ -349,13 +349,13 @@ public class AddPropertyActivity extends AppCompatActivity {
                 }
                 long id = (long) (Math.random()*50000);
                 if (priceOfProperty.getText().toString().trim().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please inter a price",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_price),Toast.LENGTH_SHORT).show();
                 } else if (numberOfRooms.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please enter the number of rooms", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_room), Toast.LENGTH_SHORT).show();
                 }else if (surfaceOfProperty.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Please enter surface of property", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_surface), Toast.LENGTH_SHORT).show();
                 }else if (imagesUriList.size() == 0){
-                    Toast.makeText(getApplicationContext(), "Please add a photo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_photo), Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Property property = new Property(
@@ -382,7 +382,7 @@ public class AddPropertyActivity extends AppCompatActivity {
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(view.getContext(), channelId)
                             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                             .setContentTitle(property.getAddress())
-                            .setContentText("New Property is added Successfully")
+                            .setContentText(getString(R.string.notification_text))
                             .setLargeIcon(BitmapFactory.decodeFile("property.getPhotos()"))
                             .setContentIntent(pendingIntent)
                             .setAutoCancel(true);
@@ -413,7 +413,7 @@ public class AddPropertyActivity extends AppCompatActivity {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setContentTitle("Notification")
-                .setContentText("New Property is added Successfully")
+                .setContentText(getString(R.string.notification_text))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 

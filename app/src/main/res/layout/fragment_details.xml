@@ -34,7 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="UPDATE"
+            android:layout_marginLeft="25dp"
+            map:cornerRadius="50dp"
+            android:text="@string/hint_update_btn"
             style="@style/Widget.MaterialComponents.Button"/>
         <TextView
             android:id="@+id/detail_type_txt"

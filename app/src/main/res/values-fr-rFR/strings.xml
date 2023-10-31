@@ -43,12 +43,20 @@
     <string name="error_loan_period">veuillez choisir une période de prêt</string>
     <string name="map">Carte</string>
     <string name="property_ad">Ajouter une propriété</string>
-    <string name="popup_title_permission_file_access">L\'autorisation est nécessaire</string>
+    <string name="popup_title_permission_file_access"> Une autorisation est nécessaire</string>
     <string name="Loan_Simulator"> Simulateur de prêt </string>
     <string name="hint_price"> Prix : </string>
     <string name="hint_publish"> Publier le : </string>
     <string name="hint_next"> A proximité de : </string>
     <string name="hint_by"> Mise en vente par : </string>
+    <string name="hint_update"> MIS A JOUR </string>
+    <string name="hint_update_btn"> Mettre à jour </string>
+    <string name="hint_detail"> DESCRIPTION </string>
+    <string name="notification_text"> Une nouvelle annonce a été ajouté avec succès </string>
+    <string name="toast_price"> Veuillez renseigner un prix svp</string>
+    <string name="toast_room"> Veuillez renseigner le nombre de chambre svp </string>
+    <string name="toast_surface">  Veuillez renseigner la superficie svp </string>
+    <string name="toast_photo"> Ajoutez une photo svp </string>
     <string-array name="type_of_property">
         <item> Manoir </item>
         <item> Studio </item>

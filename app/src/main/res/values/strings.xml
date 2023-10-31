@@ -47,7 +47,14 @@
     <string name="hint_publish"> Publish the : </string>
     <string name="hint_next"> Next to : </string>
     <string name="hint_by"> Sold by :</string>
-
+    <string name="hint_update"> Update Property </string>
+    <string name="hint_update_btn"> update </string>
+    <string name="hint_detail"> Property detail </string>
+    <string name="notification_text"> New Property is added Successfully </string>
+    <string name="toast_price"> Please inter a price </string>
+    <string name="toast_room"> Please enter the number of rooms </string>
+    <string name="toast_surface"> Please enter surface of property </string>
+    <string name="toast_photo"> Please add a photo </string>
 
     // Simulator
     <string name="Loan_Simulator"> Loan Simulator </string>

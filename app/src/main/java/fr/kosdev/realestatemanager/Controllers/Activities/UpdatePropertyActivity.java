@@ -162,7 +162,7 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
 
     private void configureToolbar(){
         setSupportActionBar(updateToolbar);
-        imageSelectedCounter.setText("Update Property");
+        imageSelectedCounter.setText(getString(R.string.hint_update));
 
     }
 
@@ -385,13 +385,13 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
         if (intent != null){
             if (intent.hasExtra("UPDATE_KEY")){
                 if (updatePriceOfProperty.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please inter a price",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.toast_price),Toast.LENGTH_SHORT).show();
                 } else if (updateNumberOfRooms.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please enter the number of rooms", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.toast_room), Toast.LENGTH_SHORT).show();
                 }else if (updateSurfaceOfProperty.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Please enter surface of property", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_surface), Toast.LENGTH_SHORT).show();
                 }else if (selectedImagesList.size() == 0){
-                    Toast.makeText(getApplicationContext(), "Please add a photo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_photo), Toast.LENGTH_SHORT).show();
                 }else {
                     property.setPhotos(selectedImagesList);
                     property.setType(updatePropertyTypesAutocomplete.getText().toString());
@@ -455,7 +455,7 @@ public class UpdatePropertyActivity extends AppCompatActivity implements View.On
 
     private void removeContextualActionMode(){
         isContexualModeEnable = false;
-        imageSelectedCounter.setText("Update Property");
+        imageSelectedCounter.setText(getString(R.string.hint_update));
         updateToolbar.getMenu().clear();
         counter = 0;
         deletedImagesList.clear();
